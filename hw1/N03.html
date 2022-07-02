@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Base JS ExN03</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Для включения сглаживания шрифтов -->
+		<meta http-equiv="cleartype" content="on"/> <!--Чтобы переключить Internet Explorer в режим последней версии -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			let askQuestion = (question) => {
+				let text = prompt(question);
+				while (text === '' || text === null){
+					text = prompt('Вы ничего не ввели, попробуйте снова:');
+				}
+				return text;
+			};
+			
+			let surname = askQuestion('Здравствуйте! Введите Вашу фамилию:');
+			let name = askQuestion('Введите Ваше имя:');
+			let patronymic = askQuestion('Введите Ваше отчество:');
+			//console.log(surname, name, patronymic);
+
+			do {
+				var age = parseInt(prompt('Введите Ваш возраст в годах:'));
+			} while (isNaN(age));
+
+			let male = confirm('Ваш пол мужской? Если да, то нажмите \'OK\', если нет \u2014 то \'Отмена\'');
+			let pension = 'да';
+			if (male === true) {
+				male = 'мужской';
+				if (age < 63) {
+					pension = 'нет';
+				}
+			} else {
+				male = 'женский';
+				if (age < 58) {
+					pension = 'нет';
+				}
+			}
+
+			let ageDays = age * 365;
+			let ageAfter = age + 5;
+
+			alert(`ваше ФИО: ${surname} ${name} ${patronymic}
+ваш возраст в годах: ${age}
+ваш возраст в днях: ${ageDays}
+через 5 лет вам будет: ${ageAfter}
+ваш пол: ${male} 
+вы на пенсии: ${pension}`);
+				
+		</script>
+
+	</body>
+</html>
