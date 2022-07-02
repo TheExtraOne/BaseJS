@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>L1 Ex1</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Для включения сглаживания шрифтов -->
+		<meta http-equiv="cleartype" content="on"/> <!--Чтобы переключить Internet Explorer в режим последней версии -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			var surname = prompt('Здравствуйте! Введите Вашу фамилию:');
+			var name = prompt('Введите Ваше имя:');
+			var patronymic = prompt('Введите Ваше отчество:');
+
+			do {
+				var age = Number(prompt('Введите Ваш возраст в годах:'));
+			} while (isNaN(age) || age === 0);
+
+			var male = confirm('Ваш пол мужской? Если да, то нажмите \'OK\', если нет \u2014 то \'Отмена\'');
+			var pension = 'да';
+			if(male === true){
+				male = 'мужской';
+				if(age < 63){
+					pension = 'нет';
+				}
+			}else{
+				male = 'женский';
+				if(age < 58){
+					pension = 'нет';
+				}
+			}
+
+			var ageDays = age * 365;
+			var ageAfter = age + 5;
+
+			alert('ваше ФИО: ' + surname + ' ' + name + ' ' + patronymic + '\nваш возраст в годах: ' + age + '\nваш возраст в днях: ' + ageDays + '\nчерез 5 лет вам будет: ' + ageAfter + '\nваш пол: ' + male + '\nвы на пенсии: ' + pension);
+				
+		</script>
+
+	</body>
+</html>
