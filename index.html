@@ -16,47 +16,38 @@
 
 			'use strict'
 
-			let askQuestion = (question) => {
-				let text = prompt(question);
-				while (text === '' || text === null){
-					text = prompt('Вы ничего не ввели, попробуйте снова:');
-				}
-				return text;
-			};
-			
-			let surname = askQuestion('Здравствуйте! Введите Вашу фамилию:');
-			let name = askQuestion('Введите Ваше имя:');
-			let patronymic = askQuestion('Введите Ваше отчество:');
-			//console.log(surname, name, patronymic);
+			let userString = prompt('Введите строку');
 
-			do {
-				var age = parseInt(prompt('Введите Ваш возраст в годах:'));
-			} while (isNaN(age));
-
-			let male = confirm('Ваш пол мужской? Если да, то нажмите \'OK\', если нет \u2014 то \'Отмена\'');
-			let pension = 'да';
-			if (male === true) {
-				male = 'мужской';
-				if (age < 63) {
-					pension = 'нет';
+			/*let deleteSpace = (newString) => {
+				for (let i = 0; newString.charAt(i) === " "; ) {
+					newString = newString.slice(i + 1);
+					//console.log(`*${newString}*`);
 				}
-			} else {
-				male = 'женский';
-				if (age < 58) {
-					pension = 'нет';
+				for (let i = newString.length - 1; newString.charAt(i) === " "; i--) {
+					newString = newString.slice(0, i);
+					//console.log(`*${newString}*`);
 				}
+				return(`*${newString}*`);
 			}
 
-			let ageDays = age * 365;
-			let ageAfter = age + 5;
+			alert( deleteSpace(userString) );*/
 
-			alert(`ваше ФИО: ${surname} ${name} ${patronymic}
-ваш возраст в годах: ${age}
-ваш возраст в днях: ${ageDays}
-через 5 лет вам будет: ${ageAfter}
-ваш пол: ${male} 
-вы на пенсии: ${pension}`);
-				
+			let deleteSpace2 = (someString) => {
+				let firstSpace = someString.indexOf(' ');
+				let lastSpace = someString.lastIndexOf(' ');
+
+				if (firstSpace === 0) {
+					someString = someString.slice(firstSpace + 1);
+					someString = deleteSpace2(someString);						
+				} 		
+				else if (lastSpace === someString.length - 1) {
+					someString = someString.slice(0, lastSpace);
+					someString = deleteSpace2(someString);
+				} 			
+				return someString;
+			}
+			
+			alert( `*${deleteSpace2(userString)}*` );
 		</script>
 
 	</body>
