@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Base JS ExN03</title>
+		<title>Base JS Add HW1</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
@@ -19,77 +19,36 @@
 			let userString = prompt('Введите строку');
 			
 			let cutSpace = (someString) => {
-				let amountSpaceStart = 0;
+				if (someString === ""){               //Проверка на пустую строку
+					console.log('Строка пуста');
+					return someString;
+				} 
+
+				let amountSpaceStart = 0;                             //Подсчет пробелов в начале
 				for (let i = 0; someString.charAt(i) === " "; i++) {
 					amountSpaceStart += 1;
 				}
 
-				let amountSpaceEnd = 0;
+				if (amountSpaceStart === someString.length) {    //Если строка состоит только из пробелов
+					console.log('Строка состоит только из пробелов');
+					return someString;
+				} 
+
+				let amountSpaceEnd = 0;                        //Подсчет пробелов в конце
 				for (let i = someString.length - 1; someString.charAt(i) === " "; i--) {
 					amountSpaceEnd += 1;
 				}
 
-				someString = someString.slice(amountSpaceStart, someString.length - amountSpaceEnd);
+				if (amountSpaceStart === 0 && amountSpaceEnd === 0) {    //Если пробелов нет
+					console.log('Пробелы в начале и в конце отсутствуют');
+					return someString;
+				}
+
+				someString = someString.slice(amountSpaceStart, someString.length - amountSpaceEnd); //Обрезка
 				return someString;
 			}
 			alert(`*${cutSpace(userString)}*`);
 			
-			/*let countSpaceStart = (someString) => {
-				let amountSpaceStart = 0;
-				for (let i = 0; someString.charAt(i) === " "; i++) {
-					amountSpaceStart += 1;
-				}
-				return amountSpaceStart;
-			}
-			console.log(countSpaceStart(userString));
-
-			let countSpaceEnd = (someString) => {
-				let amountSpaceEnd = 0;
-				for (let i = someString.length - 1; someString.charAt(i) === " "; i--) {
-					amountSpaceEnd += 1;
-				}
-				return amountSpaceEnd;
-			}
-			console.log(countSpaceEnd(userString));
-
-			let cutSpace = (someString) => {
-				let amountSpaceStart = countSpaceStart(userString);
-				let amountSpaceEnd = countSpaceEnd(userString);
-				someString = someString.slice(amountSpaceStart, someString.length - amountSpaceEnd);
-				return someString;
-			}
-			alert(`*${cutSpace(userString)}*`);*/
-
-			/*let deleteSpace = (newString) => {
-				for (let i = 0; newString.charAt(i) === " "; ) {
-					newString = newString.slice(i + 1);
-					//console.log(`*${newString}*`);
-				}
-				for (let i = newString.length - 1; newString.charAt(i) === " "; i--) {
-					newString = newString.slice(0, i);
-					//console.log(`*${newString}*`);
-				}
-				return(`*${newString}*`);
-			}
-
-			alert( deleteSpace(userString) );*/
-
-			/*let deleteSpace2 = (someString) => {
-				let firstSpace = someString.indexOf(' ');
-				let lastSpace = someString.lastIndexOf(' ');
-
-				if (firstSpace === 0) {
-					someString = someString.slice(firstSpace + 1);
-					someString = deleteSpace2(someString);						
-				} 		
-				else if (lastSpace === someString.length - 1) {
-					someString = someString.slice(0, lastSpace);
-					someString = deleteSpace2(someString);
-				} 			
-				return someString;
-			}
-			
-			alert( `*${deleteSpace2(userString)}*` );*/
 		</script>
 
 	</body>
