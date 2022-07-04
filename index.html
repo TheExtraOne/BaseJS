@@ -17,6 +17,48 @@
 			'use strict'
 
 			let userString = prompt('Введите строку');
+			
+			let cutSpace = (someString) => {
+				let amountSpaceStart = 0;
+				for (let i = 0; someString.charAt(i) === " "; i++) {
+					amountSpaceStart += 1;
+				}
+
+				let amountSpaceEnd = 0;
+				for (let i = someString.length - 1; someString.charAt(i) === " "; i--) {
+					amountSpaceEnd += 1;
+				}
+
+				someString = someString.slice(amountSpaceStart, someString.length - amountSpaceEnd);
+				return someString;
+			}
+			alert(`*${cutSpace(userString)}*`);
+			
+			/*let countSpaceStart = (someString) => {
+				let amountSpaceStart = 0;
+				for (let i = 0; someString.charAt(i) === " "; i++) {
+					amountSpaceStart += 1;
+				}
+				return amountSpaceStart;
+			}
+			console.log(countSpaceStart(userString));
+
+			let countSpaceEnd = (someString) => {
+				let amountSpaceEnd = 0;
+				for (let i = someString.length - 1; someString.charAt(i) === " "; i--) {
+					amountSpaceEnd += 1;
+				}
+				return amountSpaceEnd;
+			}
+			console.log(countSpaceEnd(userString));
+
+			let cutSpace = (someString) => {
+				let amountSpaceStart = countSpaceStart(userString);
+				let amountSpaceEnd = countSpaceEnd(userString);
+				someString = someString.slice(amountSpaceStart, someString.length - amountSpaceEnd);
+				return someString;
+			}
+			alert(`*${cutSpace(userString)}*`);*/
 
 			/*let deleteSpace = (newString) => {
 				for (let i = 0; newString.charAt(i) === " "; ) {
@@ -32,7 +74,7 @@
 
 			alert( deleteSpace(userString) );*/
 
-			let deleteSpace2 = (someString) => {
+			/*let deleteSpace2 = (someString) => {
 				let firstSpace = someString.indexOf(' ');
 				let lastSpace = someString.lastIndexOf(' ');
 
@@ -47,7 +89,7 @@
 				return someString;
 			}
 			
-			alert( `*${deleteSpace2(userString)}*` );
+			alert( `*${deleteSpace2(userString)}*` );*/
 		</script>
 
 	</body>
