@@ -15,39 +15,62 @@
 		<script>
 
 			'use strict'
-
-			let userString = prompt('Введите строку');
 			
-			let cutSpace = (someString) => {
-				if (someString === ""){               //Проверка на пустую строку
-					console.log('Строка пуста');
-					return someString;
-				} 
+			let input = prompt("Введите строку");
 
-				let amountSpaceStart = 0;                             //Подсчет пробелов в начале
-				for (let i = 0; someString.charAt(i) === " "; i++) {
-					amountSpaceStart += 1;
+			let checkIsPalindrom = (str) => {
+				let isPalindrom = 'Это палиндром';
+
+				if ( str.includes(' ') ) {  //Для удаления пробелов
+					str = str.replace(/\s+/g, '');
+					console.log(str);
 				}
 
-				if (amountSpaceStart === someString.length) {    //Если строка состоит только из пробелов
-					console.log('Строка состоит только из пробелов');
-					return "";
-				} 
-
-				let amountSpaceEnd = 0;                        //Подсчет пробелов в конце
-				for (let i = someString.length - 1; someString.charAt(i) === " "; i--) {
-					amountSpaceEnd += 1;
+				if (str.length <= 1){
+					isPalindrom = 'Это не палиндром';
+					return isPalindrom;
 				}
 
-				if (amountSpaceStart === 0 && amountSpaceEnd === 0) {    //Если пробелов нет
-					console.log('Пробелы в начале и в конце отсутствуют');
-					return someString;
+				str = str.toLowerCase(); // Для игнорирования регистра
+
+				let punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
+				str = str.replace(punctuation,"");  //Не смогла вынести в отдельный if. Для удаления знаков препинания
+				console.log(str);
+
+				if ( str.includes('ь') ) {  //Для удаления ь
+					str = str.replace(/\ь+/g, '');
+					console.log(str);
+				}
+				if ( str.includes('ъ') ) {  //Для удаления ъ
+					str = str.replace(/\ъ+/g, '');
+					console.log(str);
 				}
 
-				someString = someString.slice(amountSpaceStart, someString.length - amountSpaceEnd); //Обрезка
-				return someString;
+				if ( str.includes('ё') ) {  //Для нивелирования разницы е и ё
+					str = str.replace(/\ё+/g, 'е');
+					console.log(str);
+				}
+
+				let strStart = str[0];
+				let strEnd = str[str.length - 1];
+
+				if (strStart === strEnd) {
+					for (let i = 0, j = str.length - 1; i < j; i++, j--) {
+						strStart = str[i];
+						strEnd = str[j];
+						if (strStart !== strEnd) {
+							isPalindrom = 'Это не палиндром';
+							break;
+						}
+					}
+				} else {
+					isPalindrom = 'Это не палиндром';
+				}
+
+				return isPalindrom;
 			}
-			alert(`*${cutSpace(userString)}*`);
+
+			alert(checkIsPalindrom(input));
 			
 		</script>
 
