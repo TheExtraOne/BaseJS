@@ -19,7 +19,7 @@
 			let input = prompt("Введите строку");
 
 			let checkIsPalindrom = (str) => {
-				let isPalindrom = 'Это палиндром';
+				let isPalindrom = true;
 
 				if ( str.includes(' ') ) {  //Для удаления пробелов
 					str = str.replace(/\s+/g, '');
@@ -27,7 +27,7 @@
 				}
 
 				if (str.length <= 1){
-					isPalindrom = 'Это не палиндром';
+					isPalindrom = false;
 					return isPalindrom;
 				}
 
@@ -59,18 +59,18 @@
 						strStart = str[i];
 						strEnd = str[j];
 						if (strStart !== strEnd) {
-							isPalindrom = 'Это не палиндром';
+							isPalindrom = false;
 							break;
 						}
 					}
 				} else {
-					isPalindrom = 'Это не палиндром';
+					isPalindrom = false;
 				}
 
 				return isPalindrom;
 			}
 
-			alert(checkIsPalindrom(input));
+			alert(checkIsPalindrom(input)?'Это палиндром':'Это не палиндром');
 			
 		</script>
 
