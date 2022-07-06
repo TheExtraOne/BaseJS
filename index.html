@@ -26,11 +26,6 @@
 					//console.log(str);
 				}
 
-				if (str.length <= 1){
-					isPalindrom = false;
-					return isPalindrom;
-				}
-
 				str = str.toLowerCase(); // Для игнорирования регистра
 
 				let punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
@@ -51,20 +46,13 @@
 					//console.log(str);
 				}
 
-				let strStart = str[0];
-				let strEnd = str[str.length - 1];
-
-				if (strStart === strEnd) {
-					for (let i = 0, j = str.length - 1; i < j; i++, j--) {
-						strStart = str[i];
-						strEnd = str[j];
-						if (strStart !== strEnd) {
-							isPalindrom = false;
-							break;
-						}
+				for (let i = 0, j = str.length - 1; i < j; i++, j--) {
+					let strStart = str[i];
+					let strEnd = str[j];
+					if (strStart !== strEnd) {
+						isPalindrom = false;
+						break;
 					}
-				} else {
-					isPalindrom = false;
 				}
 
 				return isPalindrom;
