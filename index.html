@@ -18,47 +18,14 @@
 			
 			let input = prompt("Введите строку");
 
-			let checkIsPalindrom = (str) => {
-				let isPalindrom = true;
-
-				if ( str.includes(' ') ) {  //Для удаления пробелов
-					str = str.replace(/\s+/g, '');
-					//console.log(str);
-				}
-
-				str = str.toLowerCase(); // Для игнорирования регистра
-
-				let punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
-				str = str.replace(punctuation,"");  //Не смогла вынести в отдельный if. Для удаления знаков препинания
-				//console.log(str);
-
-				if ( str.includes('ь') ) {  //Для удаления ь
-					str = str.replace(/\ь+/g, '');
-					//console.log(str);
-				}
-				if ( str.includes('ъ') ) {  //Для удаления ъ
-					str = str.replace(/\ъ+/g, '');
-					//console.log(str);
-				}
-
-				if ( str.includes('ё') ) {  //Для нивелирования разницы е и ё
-					str = str.replace(/\ё+/g, 'е');
-					//console.log(str);
-				}
-
-				for (let i = 0, j = str.length - 1; i < j; i++, j--) {
-					let strStart = str[i];
-					let strEnd = str[j];
-					if (strStart !== strEnd) {
-						isPalindrom = false;
-						break;
-					}
-				}
-
-				return isPalindrom;
+			let turnOverString = (str) => {
+				str = str.split('').reverse().join('');
+				//str = str.reverse();
+				//str = str.join('');
+				return str;
 			}
-
-			alert(checkIsPalindrom(input)?'Это палиндром':'Это не палиндром');
+			
+			alert(turnOverString(input));
 			
 		</script>
 
