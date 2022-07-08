@@ -21,7 +21,9 @@
 				let newArr = arr.join(',').split(',');
 				console.log(newArr);
 				let sum = 0;
-				for (let i = 0; i < newArr.length; i++) {
+				for (let i = 0; i < newArr.length; i++) {   //for (let i of newArr) {
+					sum += (+ i);	
+				}
 					sum += (+ newArr[i]);	
 				}
 				return sum;
