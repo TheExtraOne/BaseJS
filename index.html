@@ -36,11 +36,16 @@
 				let vowelArr = ['ё','у','е','ы','а','о','э','я','и','ю'];
 				let sum = 0;
 
-				for (let i = 0; i < str.length; i++) {
-					if  (vowelArr.includes(str[i]) ) {
+				for (let i of str){
+					if ( vowelArr.includes(i) ){
 						sum += 1;
 					}
 				}
+				/*for (let i = 0; i < str.length; i++) {
+					if  (vowelArr.includes(str[i]) ) {
+						sum += 1;
+					}
+				}*/
 
 				return sum;
 			}
