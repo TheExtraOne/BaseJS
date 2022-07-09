@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Base JS Base HW2 N07</title>
+		<title>Base JS Add HW2 A4+</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
@@ -16,41 +16,51 @@
 
 			'use strict'
 			
-			let userStr = prompt('Введите строку');
+			let input = prompt("Введите строку");
 
-			/*let countVowels = (str) => {
-				str = str.toLowerCase();
-				let sum = 0;
+			let checkIsPalindrom = (str) => {
 
-				for (let i = 0; i < str.length; i++) {
-					if (str[i] === 'ё' || str[i] === 'у' || str[i] === 'е' || str[i] === 'ы' || str[i] === 'а' || str[i] === 'о' || str[i] === 'э' || str[i] === 'я' || str[i] === 'и' || str[i] === 'ю') {
-						sum += 1;
-					}
+				if ( str.includes(' ') ) {  //Для удаления пробелов
+					str = str.replace(/\s+/g, '');
 				}
 
-				return sum;
-			}*/
+				str = str.toLowerCase(); // Для игнорирования регистра
 
-			let countVowels = (str) => {
-				str = str.toLowerCase();
-				let vowelArr = ['ё','у','е','ы','а','о','э','я','и','ю'];
-				let sum = 0;
+				let punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
+				str = str.replace(punctuation,"");  //Для удаления знаков препинания
 
-				for (let i of str){
-					if ( vowelArr.includes(i) ){
-						sum += 1;
-					}
+				if ( str.includes('ь') ) {  //Для удаления ь
+					str = str.replace(/\ь+/g, '');
 				}
-				/*for (let i = 0; i < str.length; i++) {
-					if  (vowelArr.includes(str[i]) ) {
-						sum += 1;
-					}
-				}*/
+				if ( str.includes('ъ') ) {  //Для удаления ъ
+					str = str.replace(/\ъ+/g, '');
+				}
 
-				return sum;
+				if ( str.includes('ё') ) {  //Для нивелирования разницы е и ё
+					str = str.replace(/\ё+/g, 'е');
+				}
+
+				let i = 0;
+				let j = str.length - 1;
+				
+				let recursion = (str, i, j) =>{
+					let strStart = str[i];
+					let strEnd = str[j];
+
+					if (strStart !== strEnd) {
+						return false;
+					} else if (i < j) {
+						strStart = str[i++];
+						strEnd = str[j--];
+						recursion(str);	
+						return true;
+					}					
+				}
+				
+				return recursion(str, i, j);			
 			}
 
-			console.log(countVowels(userStr));
+			alert(checkIsPalindrom(input)?'Это палиндром':'Это не палиндром');
 			
 		</script>
 
