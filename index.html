@@ -44,12 +44,15 @@
 					let strStart = str[0];
 					let strEnd = str[str.length - 1];
 
-					if (strStart !== strEnd) {
-						return false;
-					} else if (str.length > 2) {
-						recursion( str.slice(1, str.length - 1) );	
-					}	
-					return true;				
+					if (str.length < 2){
+						return true;
+					}
+
+					if (strStart === strEnd) {
+						return recursion( str.slice(1, str.length - 1) );		
+					}
+
+					return false;				
 				}
 				
 				return recursion(str);			
