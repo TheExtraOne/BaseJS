@@ -40,6 +40,23 @@
 					str = str.replace(/\ё+/g, 'е');
 				}
 
+				/*let i = 0;
+				let j = str.length - 1;
+				
+				let recursion = (str, i, j) =>{
+					let strStart = str[i];
+					let strEnd = str[j];
+
+					if (strStart !== strEnd) {
+						return false;
+					} else if (i < j) {
+						strStart = str[i++];
+						strEnd = str[j--];
+						recursion(str);	
+						return true;
+					}					
+				}*/
+
 				let recursion = (str) =>{
 					let strStart = str[0];
 					let strEnd = str[str.length - 1];
