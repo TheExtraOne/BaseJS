@@ -15,50 +15,50 @@
 		<script>
 
 			'use strict'
-			
-			let input = prompt("Введите строку");
 
-			let checkIsPalindrom = (str) => {
+			let buildWrapper = (X) => {
+				let buildFunction = (str, obj = "") => {
 
-				if ( str.includes(' ') ) {  //Для удаления пробелов
-					str = str.replace(/\s+/g, '');
-				}
-
-				str = str.toLowerCase(); // Для игнорирования регистра
-
-				let punctuation = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
-				str = str.replace(punctuation,"");  //Для удаления знаков препинания
-
-				if ( str.includes('ь') ) {  //Для удаления ь
-					str = str.replace(/\ь+/g, '');
-				}
-				if ( str.includes('ъ') ) {  //Для удаления ъ
-					str = str.replace(/\ъ+/g, '');
-				}
-
-				if ( str.includes('ё') ) {  //Для нивелирования разницы е и ё
-					str = str.replace(/\ё+/g, 'е');
-				}
-
-				let recursion = (str) =>{
-					let strStart = str[0];
-					let strEnd = str[str.length - 1];
-
-					if (str.length < 2){
-						return true;
+					let changeSymbols = (someStr) => {
+						if ( someStr.includes('&') ) {  
+							someStr = someStr.replace(/\&+/g, '&amp;');
+						}
+						if ( someStr.includes('<') ) {  
+							someStr = someStr.replace(/\<+/g, '&lt;');
+						}
+						if ( someStr.includes('>') ) {  
+							someStr = someStr.replace(/\>+/g, '&gt;');
+						}
+						if ( someStr.includes('\"') ) {  
+							someStr = someStr.replace(/\"+/g, '&quot;');
+						}
+						if ( someStr.includes('\'') ) {  
+							someStr = someStr.replace(/\'+/g, '&apos;');
+						}
+						return someStr;
 					}
+					let chekedStr = changeSymbols(str);
 
-					if (strStart === strEnd) {
-						return recursion( str.slice(1, str.length - 1) );		
+					let atr = "";
+					for (let key in obj) {
+						let chekedObj = changeSymbols(obj[key]);
+						atr += ( ` ${key}='${chekedObj}'` );
 					}
-
-					return false;				
+					
+					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
+					return result;
 				}
-				
-				return recursion(str);			
+				return buildFunction;
 			}
 
-			alert(checkIsPalindrom(input)?'Это палиндром':'Это не палиндром');
+			let wrapP = buildWrapper('p');
+			console.log( wrapP('Однажды в студёную зимнюю пору') );
+			console.log( wrapP('Однажды в студёную зимнюю пору', {lang:"ru"}) );
+			console.log( wrapP('Однажды в <студёную> зимнюю пору') );
+
+			let wrapH1 = buildWrapper('H1');
+			console.log( wrapH1("СТИХИ",{align:"center",title:"M&M's"}) );
+
 			
 		</script>
 
