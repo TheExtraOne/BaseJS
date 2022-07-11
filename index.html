@@ -18,8 +18,60 @@
 
 			let buildWrapper = (X) => {
 				let buildFunction = (str, obj = "") => {
-
 					let changeSymbols = (someStr) => {
+						let sumbolLibrary = {
+							'&':'&amp;',
+							'<':'&lt;',
+							'>':'&gt;',
+							'\"':'&quot;',
+							'\'':'&apos;',
+						}
+						for (let i in sumbolLibrary) {
+							if ( someStr.includes(i) ) { 
+								let pattern = new RegExp(`${i}+`, 'g'); 
+								someStr = someStr.replace(pattern, sumbolLibrary[i]);
+								console.log(pattern);
+							}
+						}
+						return someStr;
+					}
+					let chekedStr = changeSymbols(str);
+
+					let atr = "";
+					for (let key in obj) {
+						let chekedObj = changeSymbols(obj[key]);
+						atr += ( ` ${key}='${chekedObj}'` );
+					}
+					
+					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
+					return result;
+					/*let changeSymbols = (someStr) => {
+						let sumbolLibrary = {
+							'&':'&amp;',
+							'<':'&lt;',
+							'>':'&gt;',
+							'\"':'&quot;',
+							'\'':'&apos;',
+						}
+						for (let i of someStr) {
+							if (i in sumbolLibrary) {
+								someStr = someStr.replace(i, sumbolLibrary[i]);
+							}
+						}
+						return someStr;
+					}
+					let chekedStr = changeSymbols(str);
+
+					let atr = "";
+					for (let key in obj) {
+						let chekedObj = changeSymbols(obj[key]);
+						atr += ( ` ${key}='${chekedObj}'` );
+					}
+					
+					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
+					return result;*/
+
+					/*let changeSymbols = (someStr) => {
 						if ( someStr.includes('&') ) {  
 							someStr = someStr.replace(/\&+/g, '&amp;');
 						}
@@ -46,7 +98,7 @@
 					}
 					
 					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
-					return result;
+					return result;*/
 				}
 				return buildFunction;
 			}
