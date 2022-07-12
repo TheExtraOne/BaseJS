@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Base JS Add HW2 A4+</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Для включения сглаживания шрифтов -->
+		<meta http-equiv="cleartype" content="on"/> <!--Чтобы переключить Internet Explorer в режим последней версии -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			let buildWrapper = (X) => {
+				let buildFunction = (str, obj = "") => {
+					let changeSymbols = (someStr) => {
+						let sumbolLibrary = {
+							'&':'&amp;',
+							'<':'&lt;',
+							'>':'&gt;',
+							'\"':'&quot;',
+							'\'':'&apos;',
+						}
+						for (let i in sumbolLibrary) {
+							if ( someStr.includes(i) ) { 
+								let pattern = new RegExp(`${i}+`, 'g'); 
+								someStr = someStr.replace(pattern, sumbolLibrary[i]);
+								console.log(pattern);
+							}
+						}
+						return someStr;
+					}
+					let chekedStr = changeSymbols(str);
+
+					let atr = "";
+					for (let key in obj) {
+						let chekedObj = changeSymbols(obj[key]);
+						atr += ( ` ${key}='${chekedObj}'` );
+					}
+					
+					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
+					return result;
+					/*let changeSymbols = (someStr) => {
+						let sumbolLibrary = {
+							'&':'&amp;',
+							'<':'&lt;',
+							'>':'&gt;',
+							'\"':'&quot;',
+							'\'':'&apos;',
+						}
+						for (let i of someStr) {
+							if (i in sumbolLibrary) {
+								someStr = someStr.replace(i, sumbolLibrary[i]);
+							}
+						}
+						return someStr;
+					}
+					let chekedStr = changeSymbols(str);
+
+					let atr = "";
+					for (let key in obj) {
+						let chekedObj = changeSymbols(obj[key]);
+						atr += ( ` ${key}='${chekedObj}'` );
+					}
+					
+					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
+					return result;*/
+
+					/*let changeSymbols = (someStr) => {
+						if ( someStr.includes('&') ) {  
+							someStr = someStr.replace(/\&+/g, '&amp;');
+						}
+						if ( someStr.includes('<') ) {  
+							someStr = someStr.replace(/\<+/g, '&lt;');
+						}
+						if ( someStr.includes('>') ) {  
+							someStr = someStr.replace(/\>+/g, '&gt;');
+						}
+						if ( someStr.includes('\"') ) {  
+							someStr = someStr.replace(/\"+/g, '&quot;');
+						}
+						if ( someStr.includes('\'') ) {  
+							someStr = someStr.replace(/\'+/g, '&apos;');
+						}
+						return someStr;
+					}
+					let chekedStr = changeSymbols(str);
+
+					let atr = "";
+					for (let key in obj) {
+						let chekedObj = changeSymbols(obj[key]);
+						atr += ( ` ${key}='${chekedObj}'` );
+					}
+					
+					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
+					return result;*/
+				}
+				return buildFunction;
+			}
+
+			let wrapP = buildWrapper('p');
+			console.log( wrapP('Однажды в студёную зимнюю пору') );
+			console.log( wrapP('Однажды в студёную зимнюю пору', {lang:"ru"}) );
+			console.log( wrapP('Однажды в <студёную> зимнюю пору') );
+
+			let wrapH1 = buildWrapper('H1');
+			console.log( wrapH1("СТИХИ",{align:"center",title:"M&M's"}) );
+
+			
+		</script>
+
+	</body>
+</html>

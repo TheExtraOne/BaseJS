@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Base JS Add HW2 A4+</title>
+		<title>Base JS Add HW2 C</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
@@ -15,103 +15,101 @@
 		<script>
 
 			'use strict'
-
-			let buildWrapper = (X) => {
-				let buildFunction = (str, obj = "") => {
-					let changeSymbols = (someStr) => {
-						let sumbolLibrary = {
-							'&':'&amp;',
-							'<':'&lt;',
-							'>':'&gt;',
-							'\"':'&quot;',
-							'\'':'&apos;',
-						}
-						for (let i in sumbolLibrary) {
-							if ( someStr.includes(i) ) { 
-								let pattern = new RegExp(`${i}+`, 'g'); 
-								someStr = someStr.replace(pattern, sumbolLibrary[i]);
-								console.log(pattern);
-							}
-						}
-						return someStr;
-					}
-					let chekedStr = changeSymbols(str);
-
-					let atr = "";
-					for (let key in obj) {
-						let chekedObj = changeSymbols(obj[key]);
-						atr += ( ` ${key}='${chekedObj}'` );
-					}
+			let deepCopy = (input) => {
+				if (typeof input === 'object' && input !== null) {
+					let clone = Array.isArray(input) ? [] : {};
 					
-					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
-					return result;
-					/*let changeSymbols = (someStr) => {
-						let sumbolLibrary = {
-							'&':'&amp;',
-							'<':'&lt;',
-							'>':'&gt;',
-							'\"':'&quot;',
-							'\'':'&apos;',
-						}
-						for (let i of someStr) {
-							if (i in sumbolLibrary) {
-								someStr = someStr.replace(i, sumbolLibrary[i]);
-							}
-						}
-						return someStr;
+					for (let key in input) {			
+							if (typeof input[key] === 'object' && input[key] !== null) {
+								clone[key] = deepCopy(input[key]);
+							} else {
+								clone[key] = input[key];
+							}	
 					}
-					let chekedStr = changeSymbols(str);
 
-					let atr = "";
-					for (let key in obj) {
-						let chekedObj = changeSymbols(obj[key]);
-						atr += ( ` ${key}='${chekedObj}'` );
-					}
-					
-					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
-					return result;*/
-
-					/*let changeSymbols = (someStr) => {
-						if ( someStr.includes('&') ) {  
-							someStr = someStr.replace(/\&+/g, '&amp;');
-						}
-						if ( someStr.includes('<') ) {  
-							someStr = someStr.replace(/\<+/g, '&lt;');
-						}
-						if ( someStr.includes('>') ) {  
-							someStr = someStr.replace(/\>+/g, '&gt;');
-						}
-						if ( someStr.includes('\"') ) {  
-							someStr = someStr.replace(/\"+/g, '&quot;');
-						}
-						if ( someStr.includes('\'') ) {  
-							someStr = someStr.replace(/\'+/g, '&apos;');
-						}
-						return someStr;
-					}
-					let chekedStr = changeSymbols(str);
-
-					let atr = "";
-					for (let key in obj) {
-						let chekedObj = changeSymbols(obj[key]);
-						atr += ( ` ${key}='${chekedObj}'` );
-					}
-					
-					let result = `<${X}${atr}>${chekedStr.substr(0)}</${X}>`;
-					return result;*/
+					return clone;
+				} else {
+					let clone = input;
+					return input;
 				}
-				return buildFunction;
 			}
 
-			let wrapP = buildWrapper('p');
-			console.log( wrapP('Однажды в студёную зимнюю пору') );
-			console.log( wrapP('Однажды в студёную зимнюю пору', {lang:"ru"}) );
-			console.log( wrapP('Однажды в <студёную> зимнюю пору') );
+			let h1 = { 
+				a:5,
+				b:{b1:6,
+				   b2:7},
+				c:[33,22],
+				d:null,
+				e:undefined,
+				f:Number.NaN,
+			};
+			let h2 = deepCopy(h1);
+			let a1 = [ 5, {b1:6,b2:7}, [33,22], null, undefined, Number.NaN];
+			let a2 = deepCopy(a1);
+			let v1 = "sss";
+			let v2 = deepCopy(v1);
+			let z1 = null;
+			let z2 = deepCopy(z1);
+			let n1 = Number.NaN;
+			let n2 = deepCopy(n1);
 
-			let wrapH1 = buildWrapper('H1');
-			console.log( wrapH1("СТИХИ",{align:"center",title:"M&M's"}) );
 
-			
+			/*let results = {
+				'h1 === h2': false,
+				'h1.a === h2.a': true,
+				'h1.b === h2.b': false,
+				'h1.b.b1 === h2.b.b1': true,
+				'h1.c === h2.c': false,
+				'h1.c[0] === h2.c[0]': true,
+				'h1.d === h2.d': true,
+				'h1.e === h2.e': true,
+				'isNaN(h2.f)': true,
+				'h2.c instanceof Array': true,
+			}*/
+			let results = [false,true,false,true,false,true,true,true,true,true,false,true,true,false,true,false,true,true,true,true,true,true,true,true,true,true,true];
+			let tests = [h1 === h2,
+						h1.a === h2.a,
+						h1.b === h2.b,
+						h1.b.b1 === h2.b.b1,
+						h1.c === h2.c,
+						h1.c[0] === h2.c[0],
+						h1.d === h2.d,
+						h1.e === h2.e,
+						isNaN(h2.f),
+						h2.c instanceof Array,
+						a1 === a2,
+						typeof(a2) === typeof(a1),
+						a1[0] === a2[0],
+						a1[1] === a2[1],
+						a1[1].b1 === a2[1].b1,
+						a1[2] === a2[2],
+						a1[2][0] === a2[2][0],
+						a1[3] === a2[3],
+						a1[4] === a2[4],
+						isNaN(a2[5]),
+						a2[2] instanceof Array,
+						typeof(v2) === typeof(v1),
+						v1 === v2,
+						typeof(z2) === typeof(z1),
+						z1 === z2,
+						typeof(n2) === typeof(n1),
+						isNaN(n2),
+					];
+
+			let correctTests = 0;
+			let failedTests = 0;
+			for (let i = 0, j = 0; i < results.length, j < tests.length; i++, j++ ) {
+				if (results[i] === tests[j]) {
+					console.log('Прошёл');
+					correctTests += 1;
+				} else {
+					console.log('Не прошёл');
+					failedTests += 1;
+				}
+			}
+			let statistic = ( correctTests / (correctTests + failedTests) ) * 100;
+			console.log(`Процент верных тестов: ${statistic.toFixed(2)}%`);
+
 		</script>
 
 	</body>
