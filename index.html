@@ -16,26 +16,27 @@
 
 			'use strict'
 
+			let checkClone = ( input, key) => {
+				if (typeof input[key] === 'object' && input[key] !== null) {
+					return deepCopy(input[key]);
+				} else {
+					return input[key];
+				}
+			}
 
 			let deepCopy = (input) => {
 				if (typeof input === 'object' && input !== null) {
 					let clone = Array.isArray(input) ? [] : {};
 
-					let checkClone = ( input, key) => {
-						if (typeof input[key] === 'object' && input[key] !== null) {
-							return clone[key] = deepCopy(input[key]);
-						} else {
-							return clone[key] = input[key];
-						}
-					}
+					
 					
 					if ( !Array.isArray(input) ) {
 						for (let key in input) {
-							checkClone(input, key);			
+							clone[key] = checkClone(input, key);			
 						}
 					} else {
 						for (let key = 0; key < input.length; key++) {
-							checkClone(input, key);
+							clone[key] = checkClone(input, key);
 						}
 					}
 
