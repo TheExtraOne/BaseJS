@@ -16,11 +16,11 @@
 
 			'use strict'
 
-			let checkClone = ( input, key) => {
-				if (typeof input[key] === 'object' && input[key] !== null) {
-					return deepCopy(input[key]);
+			let checkClone = (input) => {
+				if (typeof input === 'object' && input !== null) {
+					return deepCopy(input);
 				} else {
-					return input[key];
+					return input;
 				}
 			}
 
@@ -32,11 +32,11 @@
 					
 					if ( !Array.isArray(input) ) {
 						for (let key in input) {
-							clone[key] = checkClone(input, key);			
+							clone[key] = checkClone(input[key]);			
 						}
 					} else {
 						for (let key = 0; key < input.length; key++) {
-							clone[key] = checkClone(input, key);
+							clone[key] = checkClone(input[key]);
 						}
 					}
 
