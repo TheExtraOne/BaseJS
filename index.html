@@ -15,16 +15,28 @@
 		<script>
 
 			'use strict'
+
+
 			let deepCopy = (input) => {
 				if (typeof input === 'object' && input !== null) {
 					let clone = Array.isArray(input) ? [] : {};
+
+					let checkClone = ( input, key) => {
+						if (typeof input[key] === 'object' && input[key] !== null) {
+							return clone[key] = deepCopy(input[key]);
+						} else {
+							return clone[key] = input[key];
+						}
+					}
 					
-					for (let key in input) {			
-							if (typeof input[key] === 'object' && input[key] !== null) {
-								clone[key] = deepCopy(input[key]);
-							} else {
-								clone[key] = input[key];
-							}	
+					if ( !Array.isArray(input) ) {
+						for (let key in input) {
+							checkClone(input, key);			
+						}
+					} else {
+						for (let key = 0; key < input.length; key++) {
+							checkClone(input, key);
+						}
 					}
 
 					return clone;
@@ -52,58 +64,45 @@
 			let z2 = deepCopy(z1);
 			let n1 = Number.NaN;
 			let n2 = deepCopy(n1);
-
-
-			/*let results = {
-				'h1 === h2': false,
-				'h1.a === h2.a': true,
-				'h1.b === h2.b': false,
-				'h1.b.b1 === h2.b.b1': true,
-				'h1.c === h2.c': false,
-				'h1.c[0] === h2.c[0]': true,
-				'h1.d === h2.d': true,
-				'h1.e === h2.e': true,
-				'isNaN(h2.f)': true,
-				'h2.c instanceof Array': true,
-			}*/
-			let results = [false,true,false,true,false,true,true,true,true,true,false,true,true,false,true,false,true,true,true,true,true,true,true,true,true,true,true];
-			let tests = [h1 === h2,
-						h1.a === h2.a,
-						h1.b === h2.b,
-						h1.b.b1 === h2.b.b1,
-						h1.c === h2.c,
-						h1.c[0] === h2.c[0],
-						h1.d === h2.d,
-						h1.e === h2.e,
-						isNaN(h2.f),
-						h2.c instanceof Array,
-						a1 === a2,
-						typeof(a2) === typeof(a1),
-						a1[0] === a2[0],
-						a1[1] === a2[1],
-						a1[1].b1 === a2[1].b1,
-						a1[2] === a2[2],
-						a1[2][0] === a2[2][0],
-						a1[3] === a2[3],
-						a1[4] === a2[4],
-						isNaN(a2[5]),
-						a2[2] instanceof Array,
-						typeof(v2) === typeof(v1),
-						v1 === v2,
-						typeof(z2) === typeof(z1),
-						z1 === z2,
-						typeof(n2) === typeof(n1),
-						isNaN(n2),
-					];
+			
+			let tests=[
+				{ id:1, expr: h1 === h2, res:false},
+				{ id:2, expr: h1.a===h2.a, res:true },
+				{ id:3, expr: h1.b===h2.b, res:false },
+				{ id:4, expr: h1.b.b1 === h2.b.b1, res:true},
+				{ id:5, expr: h1.c === h2.c, res:false },
+				{ id:6, expr: h1.c[0] === h2.c[0], res:true },
+				{ id:7, expr: h1.d === h2.d, res:true },
+				{ id:8, expr: h1.e === h2.e, res:true },
+				{ id:9, expr: isNaN(h2.f), res:true },
+				{ id:10, expr: h2.c instanceof Array, res:true },
+				{ id:11, expr: a1 === a2, res:false },
+				{ id:12, expr: typeof(a2) === typeof(a1), res:true },
+				{ id:13, expr: a1[0] === a2[0], res:true},
+				{ id:14, expr: a1[1] === a2[1], res:false },
+				{ id:15, expr: a1[1].b1 === a2[1].b1, res:true },
+				{ id:16, expr: a1[2] === a2[2], res:false },
+				{ id:17, expr: a1[2][0] === a2[2][0], res:true },
+				{ id:18, expr: a1[3] === a2[3], res:true },
+				{ id:19, expr: a1[4] === a2[4], res:true },
+				{ id:20, expr: isNaN(a2[5]), res:true },
+				{ id:21, expr: a2[2] instanceof Array, res:true },
+				{ id:22, expr: typeof(v2) === typeof(v1), res:true },
+				{ id:23, expr: v1 === v2, res:true },
+				{ id:24, expr: typeof(z2) === typeof(z1), res:true },
+				{ id:25, expr: z1 === z2, res:true },
+				{ id:26, expr: typeof(n2) === typeof(n1), res:true },
+				{ id:27, expr: isNaN(n2), res:true },
+			];
 
 			let correctTests = 0;
 			let failedTests = 0;
-			for (let i = 0, j = 0; i < results.length, j < tests.length; i++, j++ ) {
-				if (results[i] === tests[j]) {
+			for (let i = 0; i < tests.length; i++) {
+				if (tests[i].expr === tests[i].res){
 					console.log('Прошёл');
 					correctTests += 1;
 				} else {
-					console.log('Не прошёл');
+					console.log(`Не прошёл, проверьте тест №${tests[i].id}`);
 					failedTests += 1;
 				}
 			}
