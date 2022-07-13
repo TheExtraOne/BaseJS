@@ -19,24 +19,16 @@
 			let deepCopy = (input) => {
 				if (typeof input === 'object' && input !== null) {
 					let clone;
-
-					let checkClone = (input) => {
-						if (typeof input === 'object' && input !== null) {
-							return deepCopy(input);
-						} else {
-							return input;
-						}
-					}
 					
 					if ( !Array.isArray(input) ) {
 						clone = {};
 						for (let key in input) {
-							clone[key] = checkClone(input[key]);			
+							clone[key] = deepCopy(input[key]);			
 						}
 					} else {
 						clone = [];
 						for (let key = 0; key < input.length; key++) {
-							clone[key] = checkClone(input[key]);
+							clone[key] = deepCopy(input[key]);
 						}
 					}
 
