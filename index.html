@@ -16,82 +16,78 @@
 
 			'use strict'
 
-			let deepCopy = (input) => {
-				if (typeof input === 'object' && input !== null) {
-					let clone;
-					
-					if ( !Array.isArray(input) ) {
-						clone = {};
-						for (let key in input) {
-							clone[key] = deepCopy(input[key]);			
-						}
-					} else {
-						clone = [];
-						for (let key = 0; key < input.length; key++) {
-							clone[key] = deepCopy(input[key]);
-						}
-					}
-
-					return clone;
-				} else {
-					let clone = input;
-					return input;
+			let deepComp = (input1, input2) => {
+				if (input1 === input2) {
+					return true;
 				}
+				if (Number.isNaN(input1) && Number.isNaN(input2)) {
+					return true;
+				}
+				if ( typeof input1 !== "object" || typeof input2 !== "object" || input1 === null || input2 === null) {
+					return false;
+				}
+
+				let keysInput1 = ( Array.isArray(input1) ) ? input1.sort() : Object.keys(input1).sort();
+				let keysInput2 = ( Array.isArray(input2) ) ? input2.sort() : Object.keys(input2).sort();
+
+				if (keysInput1.length !== keysInput2.length) {
+					return false;
+				}
+				for (let i = 0; i < keysInput1.length; i++) {
+					if ( typeof( input1[ keysInput1[i] ] ) === "object"){
+						return deepComp(input1[keysInput1[i]], input2[keysInput1[i]]);
+					}
+					if ( keysInput1[i] !== keysInput2[i] ) {
+						return false;
+					}
+					if ( input1[ keysInput1[i] ] !== input2[ keysInput1[i] ] ) {
+						return false;
+					}
+				}
+				return true;
 			}
 
-			let h1 = { 
-				a:5,
-				b:{b1:6,
-				   b2:7},
-				c:[33,22],
-				d:null,
-				e:undefined,
-				f:Number.NaN,
-			};
-			let h2 = deepCopy(h1);
-			let a1 = [ 5, {b1:6,b2:7}, [33,22], null, undefined, Number.NaN];
-			let a2 = deepCopy(a1);
-			let v1 = "sss";
-			let v2 = deepCopy(v1);
-			let z1 = null;
-			let z2 = deepCopy(z1);
-			let n1 = Number.NaN;
-			let n2 = deepCopy(n1);
-			
+			let H1 = { a:5, b: { b1:6, b2:7 } };
+			let H2 = { b: { b1:6, b2:7 }, a:5 };
+			let H3 = { a:5, b: { b1:6 } };
+			let H4 = { a:5, b: { b1:66, b2:7 } };
+			let H5 = { a:5, b: { b1:6, b2:7, b3:8 } };
+			let H6 = { a:null, b:undefined, c:Number.NaN };
+			let H7 = { c:Number.NaN, b:undefined, a:null };
+			let H8 = {a:5,b:6};
+			let H9 = {c:5,d:6};
+			let H10 = {a:5};
+			let A1 = [5,7];
+			let A2 = [5,5,7];
+			let A3 = [5,8,7];
+
 			let tests=[
-				{ id:1, expr: h1 === h2, res:false},
-				{ id:2, expr: h1.a===h2.a, res:true },
-				{ id:3, expr: h1.b===h2.b, res:false },
-				{ id:4, expr: h1.b.b1 === h2.b.b1, res:true},
-				{ id:5, expr: h1.c === h2.c, res:false },
-				{ id:6, expr: h1.c[0] === h2.c[0], res:true },
-				{ id:7, expr: h1.d === h2.d, res:true },
-				{ id:8, expr: h1.e === h2.e, res:true },
-				{ id:9, expr: isNaN(h2.f), res:true },
-				{ id:10, expr: h2.c instanceof Array, res:true },
-				{ id:11, expr: a1 === a2, res:false },
-				{ id:12, expr: typeof(a2) === typeof(a1), res:true },
-				{ id:13, expr: a1[0] === a2[0], res:true},
-				{ id:14, expr: a1[1] === a2[1], res:false },
-				{ id:15, expr: a1[1].b1 === a2[1].b1, res:true },
-				{ id:16, expr: a1[2] === a2[2], res:false },
-				{ id:17, expr: a1[2][0] === a2[2][0], res:true },
-				{ id:18, expr: a1[3] === a2[3], res:true },
-				{ id:19, expr: a1[4] === a2[4], res:true },
-				{ id:20, expr: isNaN(a2[5]), res:true },
-				{ id:21, expr: a2[2] instanceof Array, res:true },
-				{ id:22, expr: typeof(v2) === typeof(v1), res:true },
-				{ id:23, expr: v1 === v2, res:true },
-				{ id:24, expr: typeof(z2) === typeof(z1), res:true },
-				{ id:25, expr: z1 === z2, res:true },
-				{ id:26, expr: typeof(n2) === typeof(n1), res:true },
-				{ id:27, expr: isNaN(n2), res:true },
+				{ id:1, expr: deepComp(H1, H2), res:true},
+				{ id:2, expr: deepComp(H1, H3), res:false},
+				{ id:3, expr: deepComp(H1, H4), res:false},
+				{ id:4, expr: deepComp(H1, H5), res:false},
+				{ id:5, expr: deepComp(H6, H7), res:true},
+				{ id:6, expr: deepComp(H8, H9), res:false},
+				{ id:7, expr: deepComp(H8, H10), res:false},
+				{ id:8, expr: deepComp(null, H10), res:false},
+				{ id:9, expr: deepComp(H10, null), res:false},
+				{ id:10, expr: deepComp(null, null), res:true},
+				{ id:11, expr: deepComp(null, undefined), res:false},
+				{ id:12, expr: deepComp(5, "5"), res:false},
+				{ id:13, expr: deepComp(5, H1), res:false},
+				{ id:14, expr: deepComp(A1, H1), res:false},
+				{ id:15, expr: deepComp(A2, A3), res:false},
+				{ id:16, expr: deepComp({a:5,b:undefined}, {a:5,c:undefined}), res:false},
+				{ id:17, expr: deepComp([5,7],{0:5,1:7}), res:false},
+				{ id:18, expr: deepComp([5,7], {0:5,1:7,length:2}), res:false},
+				{ id:19, expr: deepComp("aaa","bbb"), res:false},
+				{ id:20, expr: deepComp(Number.NaN,Number.NaN), res:true},
 			];
 
 			let correctTests = 0;
 			let failedTests = 0;
 			for (let i = 0; i < tests.length; i++) {
-				if (tests[i].expr === tests[i].res){
+				if ( tests[i].expr === tests[i].res ){
 					console.log('Прошёл');
 					correctTests += 1;
 				} else {
@@ -101,6 +97,7 @@
 			}
 			let statistic = ( correctTests / (correctTests + failedTests) ) * 100;
 			console.log(`Процент верных тестов: ${statistic.toFixed(2)}%`);
+	
 
 		</script>
 

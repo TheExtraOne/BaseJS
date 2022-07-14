@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Base JS Add HW2 C</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Для включения сглаживания шрифтов -->
+		<meta http-equiv="cleartype" content="on"/> <!--Чтобы переключить Internet Explorer в режим последней версии -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			let deepCopy = (input) => {
+				if (typeof input === 'object' && input !== null) {
+					let clone;
+					
+					if ( !Array.isArray(input) ) {
+						clone = {};
+						for (let key in input) {
+							clone[key] = deepCopy(input[key]);			
+						}
+					} else {
+						clone = [];
+						for (let key = 0; key < input.length; key++) {
+							clone[key] = deepCopy(input[key]);
+						}
+					}
+
+					return clone;
+				} else {
+					let clone = input;
+					return input;
+				}
+			}
+
+			let h1 = { 
+				a:5,
+				b:{b1:6,
+				   b2:7},
+				c:[33,22],
+				d:null,
+				e:undefined,
+				f:Number.NaN,
+			};
+			let h2 = deepCopy(h1);
+			let a1 = [ 5, {b1:6,b2:7}, [33,22], null, undefined, Number.NaN];
+			let a2 = deepCopy(a1);
+			let v1 = "sss";
+			let v2 = deepCopy(v1);
+			let z1 = null;
+			let z2 = deepCopy(z1);
+			let n1 = Number.NaN;
+			let n2 = deepCopy(n1);
+			
+			let tests=[
+				{ id:1, expr: h1 === h2, res:false},
+				{ id:2, expr: h1.a===h2.a, res:true },
+				{ id:3, expr: h1.b===h2.b, res:false },
+				{ id:4, expr: h1.b.b1 === h2.b.b1, res:true},
+				{ id:5, expr: h1.c === h2.c, res:false },
+				{ id:6, expr: h1.c[0] === h2.c[0], res:true },
+				{ id:7, expr: h1.d === h2.d, res:true },
+				{ id:8, expr: h1.e === h2.e, res:true },
+				{ id:9, expr: isNaN(h2.f), res:true },
+				{ id:10, expr: h2.c instanceof Array, res:true },
+				{ id:11, expr: a1 === a2, res:false },
+				{ id:12, expr: typeof(a2) === typeof(a1), res:true },
+				{ id:13, expr: a1[0] === a2[0], res:true},
+				{ id:14, expr: a1[1] === a2[1], res:false },
+				{ id:15, expr: a1[1].b1 === a2[1].b1, res:true },
+				{ id:16, expr: a1[2] === a2[2], res:false },
+				{ id:17, expr: a1[2][0] === a2[2][0], res:true },
+				{ id:18, expr: a1[3] === a2[3], res:true },
+				{ id:19, expr: a1[4] === a2[4], res:true },
+				{ id:20, expr: isNaN(a2[5]), res:true },
+				{ id:21, expr: a2[2] instanceof Array, res:true },
+				{ id:22, expr: typeof(v2) === typeof(v1), res:true },
+				{ id:23, expr: v1 === v2, res:true },
+				{ id:24, expr: typeof(z2) === typeof(z1), res:true },
+				{ id:25, expr: z1 === z2, res:true },
+				{ id:26, expr: typeof(n2) === typeof(n1), res:true },
+				{ id:27, expr: isNaN(n2), res:true },
+			];
+
+			let correctTests = 0;
+			let failedTests = 0;
+			for (let i = 0; i < tests.length; i++) {
+				if (tests[i].expr === tests[i].res){
+					console.log('Прошёл');
+					correctTests += 1;
+				} else {
+					console.log(`Не прошёл, проверьте тест №${tests[i].id}`);
+					failedTests += 1;
+				}
+			}
+			let statistic = ( correctTests / (correctTests + failedTests) ) * 100;
+			console.log(`Процент верных тестов: ${statistic.toFixed(2)}%`);
+
+		</script>
+
+	</body>
+</html>
