@@ -27,24 +27,31 @@
 					return false;
 				}
 
-				let keysInput1 = ( Array.isArray(input1) ) ? input1.sort() : Object.keys(input1).sort();
-				let keysInput2 = ( Array.isArray(input2) ) ? input2.sort() : Object.keys(input2).sort();
+				let keysInput1 = ( Array.isArray(input1) ) ? input1 : Object.keys(input1);
+				let keysInput2 = ( Array.isArray(input2) ) ? input2 : Object.keys(input2);
 
 				if (keysInput1.length !== keysInput2.length) {
 					return false;
 				}
-				for (let i = 0; i < keysInput1.length; i++) {
-					if ( typeof( input1[ keysInput1[i] ] ) === "object"){
-						return deepComp(input1[keysInput1[i]], input2[keysInput1[i]]);
+
+				if ( Array.isArray(input1) && Array.isArray(input2) ) {
+					for (let i = 0; i < keysInput1.length; i++) {
+						if ( keysInput1[i] !== keysInput2[i]) {
+							return deepComp(keysInput1[i], keysInput2[i]);
+						}
 					}
-					if ( keysInput1[i] !== keysInput2[i] ) {
-						return false;
+					return true;
+				} else {				
+					for (let i = 0; i < keysInput1.length; i++) {
+						if ( !keysInput2.includes(keysInput1[i]) || !keysInput1.includes(keysInput2[i])) {
+							return false;
+						}
+						if ( input1[ keysInput1[i] ] !== input2[ keysInput1[i] ] ) {
+							return deepComp(input1[keysInput1[i]], input2[keysInput1[i]]);
+						}
 					}
-					if ( input1[ keysInput1[i] ] !== input2[ keysInput1[i] ] ) {
-						return false;
-					}
+					return true;
 				}
-				return true;
 			}
 
 			let H1 = { a:5, b: { b1:6, b2:7 } };
