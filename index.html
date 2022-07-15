@@ -26,6 +26,9 @@
 				if ( typeof input1 !== "object" || typeof input2 !== "object" || input1 === null || input2 === null) {
 					return false;
 				}
+				if ( Array.isArray(input1) !== Array.isArray(input2) ) {
+  					return false;
+				}
 				if ( Array.isArray(input1) && Array.isArray(input2) ) {
 					if (input1.length !== input2.length) {
 						return false;
@@ -40,8 +43,9 @@
 					}
 
 					return true;
-				} else if ( !Array.isArray(input1) && !Array.isArray(input2)){	
-					let keysInput1 = Object.keys(input1);
+				}
+				if ( !Array.isArray(input1) && !Array.isArray(input2)){	
+					/*let keysInput1 = Object.keys(input1);
 					let keysInput2 = Object.keys(input2);
 
 					if (keysInput1.length !== keysInput2.length) {
@@ -57,9 +61,22 @@
 						}
 					}
 					
+					return true;*/
+					if ( Object.keys(input1).length !== Object.keys(input2).length ){
+						return false;
+					}
+
+					for (let key in input1) {
+						if (key in input2 === false) { 
+							return false;
+						}
+						if (input1[key] !== input2[key]) {
+							return deepComp (input1[key], input2[key]);
+						}
+					}
+
 					return true;
 				}
-				return false;
 			}
 
 			let H1 = { a:5, b: { b1:6, b2:7 } };
