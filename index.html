@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Base JS Add HW2 C</title>
+		<title>Base JS Add HW2 C3</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
@@ -26,24 +26,28 @@
 				if ( typeof input1 !== "object" || typeof input2 !== "object" || input1 === null || input2 === null) {
 					return false;
 				}
-
 				if ( Array.isArray(input1) && Array.isArray(input2) ) {
 					if (input1.length !== input2.length) {
 						return false;
 					}
+
 					for (let i = 0; i < input1.length; i++) {
 						if ( input1[i] !== input2[i]) {
-							return deepComp(input1[i], input2[i]);
+							if( !deepComp(input1[i], input2[i]) ){
+								return false;
+							}			
 						}
 					}
+
 					return true;
-				} else {	
-					let keysInput1 = ( Array.isArray(input1) ) ? input1 : Object.keys(input1);
-					let keysInput2 = ( Array.isArray(input2) ) ? input2 : Object.keys(input2);
+				} else if ( !Array.isArray(input1) && !Array.isArray(input2)){	
+					let keysInput1 = Object.keys(input1);
+					let keysInput2 = Object.keys(input2);
 
 					if (keysInput1.length !== keysInput2.length) {
 						return false;
 					}
+
 					for (let i = 0; i < keysInput1.length; i++) {
 						if ( !keysInput2.includes(keysInput1[i]) || !keysInput1.includes(keysInput2[i]) ) {
 							return false;
@@ -52,8 +56,10 @@
 							return deepComp(input1[keysInput1[i]], input2[keysInput1[i]]);
 						}
 					}
+					
 					return true;
 				}
+				return false;
 			}
 
 			let H1 = { a:5, b: { b1:6, b2:7 } };
@@ -91,6 +97,7 @@
 				{ id:18, expr: deepComp([5,7], {0:5,1:7,length:2}), res:false},
 				{ id:19, expr: deepComp("aaa","bbb"), res:false},
 				{ id:20, expr: deepComp(Number.NaN,Number.NaN), res:true},
+				{ id:21, expr: deepComp([{a:5},2],[{a:5},7]), res:false},
 			];
 
 			let correctTests = 0;
