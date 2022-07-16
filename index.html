@@ -29,7 +29,7 @@
 				if ( Array.isArray(input1) !== Array.isArray(input2) ) {
   					return false;
 				}
-				if ( Array.isArray(input1) && Array.isArray(input2) ) {
+				if ( Array.isArray(input1) || Array.isArray(input2) ) {
 					if (input1.length !== input2.length) {
 						return false;
 					}
@@ -44,24 +44,7 @@
 
 					return true;
 				}
-				if ( !Array.isArray(input1) && !Array.isArray(input2)){	
-					/*let keysInput1 = Object.keys(input1);
-					let keysInput2 = Object.keys(input2);
-
-					if (keysInput1.length !== keysInput2.length) {
-						return false;
-					}
-
-					for (let i = 0; i < keysInput1.length; i++) {
-						if ( !keysInput2.includes(keysInput1[i]) || !keysInput1.includes(keysInput2[i]) ) {
-							return false;
-						}
-						if ( input1[ keysInput1[i] ] !== input2[ keysInput1[i] ] ) {
-							return deepComp(input1[keysInput1[i]], input2[keysInput1[i]]);
-						}
-					}
-					
-					return true;*/
+				if ( !Array.isArray(input1) || !Array.isArray(input2)){	
 					if ( Object.keys(input1).length !== Object.keys(input2).length ){
 						return false;
 					}
@@ -71,7 +54,9 @@
 							return false;
 						}
 						if (input1[key] !== input2[key]) {
-							return deepComp (input1[key], input2[key]);
+							if( !deepComp (input1[key], input2[key]) ) {
+								return false;
+							}
 						}
 					}
 
@@ -115,6 +100,7 @@
 				{ id:19, expr: deepComp("aaa","bbb"), res:false},
 				{ id:20, expr: deepComp(Number.NaN,Number.NaN), res:true},
 				{ id:21, expr: deepComp([{a:5},2],[{a:5},7]), res:false},
+				{ id:22, expr: deepComp({a:{b:6},c:7}, {a:{b:6},c:8}), res:false},
 			];
 
 			let correctTests = 0;

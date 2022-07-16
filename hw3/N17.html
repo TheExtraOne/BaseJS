@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Base JS Base HW2 N07</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Для включения сглаживания шрифтов -->
+		<meta http-equiv="cleartype" content="on"/> <!--Чтобы переключить Internet Explorer в режим последней версии -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+			
+			let userStr = prompt('Введите строку');
+
+			let countVowels1 = (str) => {
+				let arr = str.toLowerCase().split('');
+				let vowelArr = {'ё':1,'у':1,'е':1,'ы':1,'а':1,'о':1,'э':1,'я':1,'и':1,'ю':1};
+				let sum = 0;
+
+				arr.forEach(element => {
+					if (element in vowelArr) {
+						sum += 1;
+					}
+				});
+
+				return sum;
+			}
+
+			let countVowels2 = (str) => {
+				let arr = str.toLowerCase().split('');
+				let vowelArr = {'ё':1,'у':1,'е':1,'ы':1,'а':1,'о':1,'э':1,'я':1,'и':1,'ю':1};
+				
+				return arr.filter(element => element in vowelArr).length;
+			}
+
+			let countVowels3 = (str) => {
+				let arr = str.toLowerCase().split('');
+				let vowelArr = {'ё':1,'у':1,'е':1,'ы':1,'а':1,'о':1,'э':1,'я':1,'и':1,'ю':1};
+
+				function fra (sum, element) {
+					if (element in vowelArr) {
+						sum += 1;
+					}
+					return sum;
+				}
+				return arr.reduce(fra,0);
+			}
+
+			console.log( countVowels1(userStr) );
+			console.log( countVowels2(userStr) );
+			console.log( countVowels3(userStr) );
+			
+		</script>
+
+	</body>
+</html>

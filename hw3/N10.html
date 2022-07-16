@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Base JS Add HW2 C3</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Для включения сглаживания шрифтов -->
+		<meta http-equiv="cleartype" content="on"/> <!--Чтобы переключить Internet Explorer в режим последней версии -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			/*let randomDiap = (n, m) => {
+            	return Math.floor( Math.random() * (m - n + 1) ) + n;
+			}
+
+			let mood = (colorsCount) => {
+				let colors=[ '', 'красный', 'оранжевый', 'жёлтый', 'зелёный', 'голубой', 'синий', 'фиолетовый' ];
+
+				console.log( 'цветов: ' + colorsCount );
+
+				let arr = [];
+
+				for ( let i = 0; arr.length < colorsCount;) {
+					let n = randomDiap(1, 7);
+					if (arr.includes(colors[n]) === false) {
+						arr[i] = colors[n];
+						console.log( colors[n] );
+						i++;
+					}
+				}
+			}
+
+    		mood(3);*/
+
+			/*let randomDiap = (n, m) => {
+            	return Math.floor( Math.random() * (m - n + 1) ) + n;
+			}
+
+			let mood = (colorsCount) => {
+				let colors=[ '', 'красный', 'оранжевый', 'жёлтый', 'зелёный', 'голубой', 'синий', 'фиолетовый' ];
+
+				console.log( 'цветов: ' + colorsCount );
+
+				let obj = {};
+
+				while (Object.keys(obj).length < colorsCount) {
+					let n = randomDiap(1, 7);
+					if (colors[n] in obj === false) {
+						obj[colors[n]] = 1;
+						console.log( colors[n] );
+					}
+				}
+			}
+
+    		mood(3);*/
+
+			let randomDiap = (n, m) => {
+            	return Math.floor( Math.random() * (m - n + 1) ) + n;
+			}
+
+			let mood = (colorsCount) => {
+				let colors=[ '', 'красный', 'оранжевый', 'жёлтый', 'зелёный', 'голубой', 'синий', 'фиолетовый' ];
+
+				console.log( 'цветов: ' + colorsCount );
+
+				let rainbow = new Set();
+
+				while (rainbow.size < colorsCount) {
+					let n = randomDiap(1, 7);
+					( rainbow.add(colors[n]) );   //тут даже не нужно использовать set.has(value), т.к. если значение уже есть, то оно не добавится при помощи set.aa(value)
+				}
+				for (let value of rainbow){
+					console.log(value);
+				}
+			}
+
+    		mood(3);
+	
+
+		</script>
+
+	</body>
+</html>
