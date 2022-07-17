@@ -29,7 +29,7 @@
 				if ( Array.isArray(input1) !== Array.isArray(input2) ) {
   					return false;
 				}
-				if ( Array.isArray(input1) || Array.isArray(input2) ) {
+				if ( Array.isArray(input1) ) {
 					if (input1.length !== input2.length) {
 						return false;
 					}
@@ -44,7 +44,7 @@
 
 					return true;
 				}
-				if ( !Array.isArray(input1) || !Array.isArray(input2)){	
+				if ( !Array.isArray(input1) ){	
 					if ( Object.keys(input1).length !== Object.keys(input2).length ){
 						return false;
 					}
