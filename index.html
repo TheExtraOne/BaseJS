@@ -17,7 +17,7 @@
 			'use strict'
 
 			let calc = (str) => {
-				let arr = str.split(' ');
+				/*let arr = str.split(' ');
 				let arrNum = [];
 
 				for (let i = 0; i < arr.length; i++) {                      //Преобразовываю в числа
@@ -26,6 +26,31 @@
 					} else {
 						arrNum[i] = arr[i];
 					}
+				}
+				//console.log(arrNum);*/
+
+				let arrNum = [];
+				let number = '';
+				let oper = new Set( ["*","/","+","-","(",")"] )
+
+				for (let i = 0; i < str.length; i++){        //Преобразовываю в числа и записываю в массив
+					if ( oper.has( str[i] ) ) {
+						if (str[i] === '-' && number === '') {
+							number = '-'
+						} else {
+							if (number === ''){
+								arrNum.push( str[i] );
+							} else {
+								arrNum.push( parseFloat(number), str[i] );
+								number = '';
+							}
+						}
+					} else {
+						number += str[i];
+					}			
+				}
+				if (number !== ''){
+					arrNum.push( parseFloat(number));
 				}
 				//console.log(arrNum);
 
@@ -84,21 +109,21 @@
 				return innerCalc(arrNum);	
 			}
 
-			alert( calc( prompt('Введите выражение, отделяя цифры и знаки пробелом') ) );
+			alert( calc(prompt('Введите выражение')) );
 
-			let tests=[
-				{ id:1, expr: calc('2 * ( -3 + 1 )'), res:-4},
-				{ id:2, expr: calc('( 3 + 5 ) / 2'), res:4},
-				{ id:3, expr: calc('( 3 + 5 ) / ( 1 + 1 )'), res:4},
-				{ id:4, expr: calc('25 / ( 3 * 2 - 1 )'), res:5},
-				{ id:5, expr: calc('25 / 0'), res:Infinity},
-				{ id:6, expr: calc('25 + ( 3 + 0 )'), res:28},
-				{ id:7, expr: calc('25 + ( 3 + ( 2 - 3 ) )'), res:27},
-				{ id:8, expr: calc('25 + ( 3 * ( 2 - 3 ) )'), res:22},
-				{ id:9, expr: calc('25 + ( 3 * ( 12 / ( 6 - 3 ) ) )'), res:37},
-				{ id:10, expr: calc('25 + ( 3 + ( 2 - 3 ) ) / ( 6 - 2 )'), res:25.5},
-				{ id:11, expr: calc('0.5 + 0.5'), res:1},
-				{ id:12, expr: calc('-2 + 0.2 * ( 0.5 + 1.5 )'), res:-1.6},
+			/*let tests=[
+				{ id:1, expr: calc('2*(-3+1)'), res:-4},
+				{ id:2, expr: calc('(3+5)/2'), res:4},
+				{ id:3, expr: calc('(3+5)/(1+1)'), res:4},
+				{ id:4, expr: calc('25/(3*2-1)'), res:5},
+				{ id:5, expr: calc('25/0'), res:Infinity},
+				{ id:6, expr: calc('25+(3+0)'), res:28},
+				{ id:7, expr: calc('25+(3+(2-3))'), res:27},
+				{ id:8, expr: calc('25+(3*(2-3))'), res:22},
+				{ id:9, expr: calc('25+(3*(12/(6-3)))'), res:37},
+				{ id:10, expr: calc('25+(3+(2-3))/(6-2)'), res:25.5},
+				{ id:11, expr: calc('0.5+0.5'), res:1},
+				{ id:12, expr: calc('-2+0.2*(0.5+1.5)'), res:-1.6},
 			];
 
 			let correctTests = 0;
@@ -113,7 +138,7 @@
 				}
 			}
 			let statistic = ( correctTests / (correctTests + failedTests) ) * 100;
-			console.log(`Процент верных тестов: ${statistic.toFixed(2)}%`);
+			console.log(`Процент верных тестов: ${statistic.toFixed(2)}%`);*/
 
 		</script>
 

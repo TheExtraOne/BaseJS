@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Base JS Add HW2 C3</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Для включения сглаживания шрифтов -->
+		<meta http-equiv="cleartype" content="on"/> <!--Чтобы переключить Internet Explorer в режим последней версии -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			let calc = (str) => {
+				let arrNum = [];
+				let number = '';
+				let oper = new Set( ["*","/","+","-","(",")"] )
+
+				for (let i = 0; i < str.length; i++){
+					if ( oper.has( str[i] ) ) {
+						if (str[i] === '-' && number === '') {
+							number = '-'
+						} else {
+							if (number === ''){
+								arrNum.push( str[i] );
+							} else {
+								arrNum.push( parseFloat(number), str[i] );
+								number = '';
+							}
+						}
+					} else {
+						number = str[i];
+					}
+				
+				}
+				return arrNum;
+			}
+
+			console.log( calc("2*(-3+1)") );
+			
+
+		</script>
+
+	</body>
+</html>
