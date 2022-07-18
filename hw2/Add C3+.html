@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Base JS Add HW2 C3</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Для включения сглаживания шрифтов -->
+		<meta http-equiv="cleartype" content="on"/> <!--Чтобы переключить Internet Explorer в режим последней версии -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			let deepComp = (input1, input2) => {
+				if (input1 === input2) {
+					return true;
+				}
+				if (Number.isNaN(input1) && Number.isNaN(input2)) {
+					return true;
+				}
+				if ( typeof input1 !== "object" || typeof input2 !== "object" || input1 === null || input2 === null) {
+					return false;
+				}
+				if ( Array.isArray(input1) !== Array.isArray(input2) ) {
+  					return false;
+				}
+				if ( Array.isArray(input1) ) {
+					if (input1.length !== input2.length) {
+						return false;
+					}
+
+					for (let i = 0; i < input1.length; i++) {
+						if ( input1[i] !== input2[i]) {
+							if( !deepComp(input1[i], input2[i]) ){
+								return false;
+							}			
+						}
+					}
+
+					return true;
+				}
+				if ( !Array.isArray(input1) ){	
+					if ( Object.keys(input1).length !== Object.keys(input2).length ){
+						return false;
+					}
+
+					for (let key in input1) {
+						if (key in input2 === false) { 
+							return false;
+						}
+						if (input1[key] !== input2[key]) {
+							if( !deepComp (input1[key], input2[key]) ) {
+								return false;
+							}
+						}
+					}
+
+					return true;
+				}
+			}
+
+			let H1 = { a:5, b: { b1:6, b2:7 } };
+			let H2 = { b: { b1:6, b2:7 }, a:5 };
+			let H3 = { a:5, b: { b1:6 } };
+			let H4 = { a:5, b: { b1:66, b2:7 } };
+			let H5 = { a:5, b: { b1:6, b2:7, b3:8 } };
+			let H6 = { a:null, b:undefined, c:Number.NaN };
+			let H7 = { c:Number.NaN, b:undefined, a:null };
+			let H8 = {a:5,b:6};
+			let H9 = {c:5,d:6};
+			let H10 = {a:5};
+			let A1 = [5,7];
+			let A2 = [5,5,7];
+			let A3 = [5,8,7];
+
+			let tests=[
+				{ id:1, expr: deepComp(H1, H2), res:true},
+				{ id:2, expr: deepComp(H1, H3), res:false},
+				{ id:3, expr: deepComp(H1, H4), res:false},
+				{ id:4, expr: deepComp(H1, H5), res:false},
+				{ id:5, expr: deepComp(H6, H7), res:true},
+				{ id:6, expr: deepComp(H8, H9), res:false},
+				{ id:7, expr: deepComp(H8, H10), res:false},
+				{ id:8, expr: deepComp(null, H10), res:false},
+				{ id:9, expr: deepComp(H10, null), res:false},
+				{ id:10, expr: deepComp(null, null), res:true},
+				{ id:11, expr: deepComp(null, undefined), res:false},
+				{ id:12, expr: deepComp(5, "5"), res:false},
+				{ id:13, expr: deepComp(5, H1), res:false},
+				{ id:14, expr: deepComp(A1, H1), res:false},
+				{ id:15, expr: deepComp(A2, A3), res:false},
+				{ id:16, expr: deepComp({a:5,b:undefined}, {a:5,c:undefined}), res:false},
+				{ id:17, expr: deepComp([5,7],{0:5,1:7}), res:false},
+				{ id:18, expr: deepComp([5,7], {0:5,1:7,length:2}), res:false},
+				{ id:19, expr: deepComp("aaa","bbb"), res:false},
+				{ id:20, expr: deepComp(Number.NaN,Number.NaN), res:true},
+				{ id:21, expr: deepComp([{a:5},2],[{a:5},7]), res:false},
+				{ id:22, expr: deepComp({a:{b:6},c:7}, {a:{b:6},c:8}), res:false},
+			];
+
+			let correctTests = 0;
+			let failedTests = 0;
+			for (let i = 0; i < tests.length; i++) {
+				if ( tests[i].expr === tests[i].res ){
+					console.log('Прошёл');
+					correctTests += 1;
+				} else {
+					console.log(`Не прошёл, проверьте тест №${tests[i].id}`);
+					failedTests += 1;
+				}
+			}
+			let statistic = ( correctTests / (correctTests + failedTests) ) * 100;
+			console.log(`Процент верных тестов: ${statistic.toFixed(2)}%`);
+	
+
+		</script>
+
+	</body>
+</html>
