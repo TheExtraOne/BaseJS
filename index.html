@@ -20,7 +20,7 @@
 				/*let arr = str.split(' ');
 				let arrNum = [];
 
-				for (let i = 0; i < arr.length; i++) {                      //Преобразовываю в числа
+				for (let i = 0; i < arr.length; i++) {                      //Преобразовываю в числа при введении через пробел
 					if ( parseFloat(arr[i]) || parseFloat(arr[i]) === 0) {
 						arrNum[i] = parseFloat(arr[i]);
 					} else {
@@ -28,6 +28,9 @@
 					}
 				}
 				//console.log(arrNum);*/
+				if (str === null || str === '') {
+					return 'Вы ничего не ввели';
+				}
 
 				let arrNum = [];
 				let number = '';
@@ -61,6 +64,9 @@
 					arrNum.push( parseFloat(number));
 				}
 				//console.log(arrNum);
+				if (arrNum.length === 1) {
+					return arrNum[0];
+				}
 
 				let innerCalc = (arrNum) => {
 
@@ -112,7 +118,6 @@
 								//console.log(`${arrNum} arrNum 2`);
 								//console.log(i);
 								if (arrNum.length > 1) {
-								//console.log(innerCalc(arrNum));
 									return innerCalc(arrNum);
 								}						
 							}
@@ -120,12 +125,18 @@
 					}
 					return result;
 				}
-				return innerCalc(arrNum);	
+				return innerCalc(arrNum);
 			}
 
-			alert( calc(prompt('Введите выражение')) );
+			//alert( calc(prompt('Введите выражение')) );
+			let answer;
+			if ( Number.isNaN( answer = calc( prompt('Введите выражение') ))) {
+				alert('Вы ввели неверное выражение');
+			} else {
+				alert(answer);
+			}
 
-			/*let tests=[
+			let tests=[
 				{ id:1, expr: calc('2*(-3+1)'), res:-4},
 				{ id:2, expr: calc('(3+5)/2'), res:4},
 				{ id:3, expr: calc('(3+5)/(1+1)'), res:4},
@@ -145,6 +156,10 @@
 				{ id:17, expr: calc('-2*3*-1*4'), res:24},
 				{ id:18, expr: calc('-2*6+(2-4*-3)/2'), res:-5},
 				{ id:19, expr: calc('-2*6+(3-5*-3)/2/3'), res:-9},
+				{ id:20, expr: calc('1*1'), res:1},
+				{ id:21, expr: calc('1-1'), res:0},
+				{ id:22, expr: calc('-1'), res:-1},
+				{ id:23, expr: calc('0'), res:0},
 			];
 
 			let correctTests = 0;
@@ -159,7 +174,7 @@
 				}
 			}
 			let statistic = ( correctTests / (correctTests + failedTests) ) * 100;
-			console.log(`Процент верных тестов: ${statistic.toFixed(2)}%`);*/
+			console.log(`Процент верных тестов: ${statistic.toFixed(2)}%`);
 
 		</script>
 
