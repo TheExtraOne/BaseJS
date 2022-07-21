@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Base JS Add HW3 B4+</title>
+		<title>Base JS Add HW3 B7+</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
@@ -16,73 +16,34 @@
 
 			'use strict'
 
-			let buildWords = (input1, input2) => {
-				input1 = input1.toUpperCase();
-				input2 = input2.toUpperCase();
-
-				let vocab = ["ЛУЖА","МУЗА","ЛИРА","МЕХА","ЛИГА","ТАРА","ЛИПА","ТУРА","ПАРК","ЛОЖЬ","ЛУПА","ПЛОТ","МУРА","ПАУК","ПАУТ","ПЛУТ","ЛОЖА","СЛОТ","ПАРА"];
-				let chainWord = input1;
-				let result = [chainWord];
-				let a = 1;
-		
-				vocab.push(input2);
-
-				let search = (chainWord) => {	  //Нахожу следующее слово в цепочке
-					//console.log(chainWord);			
-					for (let word of vocab){
-						let count = 0;
-						for (let i = 0; i < word.length; i++){
-							if (word[i] === chainWord[i]) {
-								count++;
-							}
-							if (count === 3 && result.includes(word) === false) {
-								result[a] = word;
-								chainWord = word
-								a++;
-								return chainWord;
-							}
-						}
-					}
-				}
-
-				/*let run = true;         //Если конечное слово не добавлять в словарь
-				while (run) {
-					chainWord = search(chainWord);
-					let count = 0;
-					for (let i = 0; i < chainWord.length; i++) {	
-						if (chainWord[i] === input2[i]) {
-							count++;
-						}
-						if (count === 3) {
-							result[a] = input2;
-							run = false;
-							break;
-						}
-					}
-				}*/
-				do {                              //Если конечное слово добавить в словарь
-					chainWord = search(chainWord);
-				} while (chainWord !== input2);
-
-				for (let i = 0; i < result.length; i++) {       //Сокращаю цепочку: одновременно перебираю слова сначала и с конца, сравниваю. Если у них 3 буквы одинаковые, то вырезаю из массива все слова, стояющие между ними.
-					for (let j = result.length - 2; j > i; j--) {
-						let count = 0;
-						for (let b = 0; b < result[j].length; b++) {
-							if (result[j][b] === result[i][b] && i !== j - 1) {
-								count++;
-							}
-							if (count === 3) {
-								result.splice(i + 1, j - 1);
-							}
-						}
-					}
-				}
-
-				return result.join('-');
+			let formatNumber = (numb, format) => {
+				let dotPos = format.lastIndexOf('.'); //Позиция точки в образце
+				let n = (format.length - 1) - dotPos; //Кол-во знаков после запятой в образце
+				let newNumb = numb.toFixed(n);
+				let a = newNumb.lastIndexOf('.');  //Позиция точки в числе
+				let newNumbEnd = newNumb.substr(a); //Вырезаю в строку все цифры после точки
+				let result = [];
+				let b = 0;
 				
+				for (let i = dotPos - 1, j = a - 1; i >= 0; i--) {
+					if (format[i] === '#') {
+						result[b] = newNumb[j];
+						j--;
+						b++; 
+					}
+					if (format[i] === ' '){
+						result[b] = ' ';
+						b++;
+					}
+				}
+				result.reverse().push(newNumbEnd);
+				let resultStr = result.join('');
+				
+				return resultStr;
 			}
-			console.log( buildWords('ЛИСА','ЛОСЬ') );
-			console.log( buildWords('Муха','слон') );
+			console.log( formatNumber(2.3,"# ### ###.##") );
+			console.log( formatNumber(12345.368,"# ### ###.##") );
+			console.log( formatNumber(12345.368,"# ## ## ##.##") );
 			
 				
 		</script>
