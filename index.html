@@ -21,7 +21,7 @@
 				let b = 0;
 				let dotPos = format.lastIndexOf('.'); //Позиция точки в образце
 				
-				if (dotPos !== -1) {
+				if (dotPos !== -1 && dotPos !== format.length - 1) {
 					let n = (format.length - 1) - dotPos; //Кол-во знаков после запятой в образце
 					let newNumb = numb.toFixed(n);
 					let a = newNumb.lastIndexOf('.');  //Позиция точки в числе
@@ -54,6 +54,9 @@
 						}
 					}
 					result.reverse()
+					if (dotPos === format.length - 1) {
+						result.push('.');
+					}
 				}
 				let resultStr = result.join('');
 
@@ -64,6 +67,7 @@
 			console.log( formatNumber(12345.1,"# ### ###.##") );
 			console.log( formatNumber(12345.368,"# ## ## ##.##") );
 			console.log( formatNumber(12345.1,"# ### ###") );
+			console.log( formatNumber(12345.1,"# ### ###.") );
 			
 				
 		</script>
