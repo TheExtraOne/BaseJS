@@ -4,16 +4,21 @@
     box-sizing: border-box;
 }
 body{
+    min-height: 100vh;
     background-color: #0c1920;
 }
-.wrapper{
-    min-height: 100vh;
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content:space-around;
     align-items:center;
 }
 input{
+    z-index: 1;
     width: 540px;
     height: 90px;
     font: 600 30px sans-serif;
@@ -26,4 +31,35 @@ input:hover{
     background: linear-gradient(45deg,#4fc3dc 0,#96e5d5 100%);
     transition: all linear 0.7s;
     transform: scale(1.1);
+}
+.bubles {
+    position: relative;
+    display: flex;
+}
+.bubles span{
+    position: relative;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: #4fc3dc;
+    margin: 0px 4px;
+    box-shadow: 0px 0px 0px 10px #4fc3dc44,
+    0px 0px 50px #4fc3dc,
+    0px 0px 100px #4fc3dc;
+    animation: animate 15s linear infinite;
+    animation-duration: calc(125s / var(--i));
+}
+.bubles span:nth-child(even){
+    background-color: #ff2d75;
+    box-shadow: 0px 0px 0px 10px #ff2d7544,
+    0px 0px 50px #ff2d75,
+    0px 0px 100px #ff2d75;
+}
+@keyframes animate {
+    0%{
+        transform: translateY(100vh) scale(0);
+    }
+    100%{
+        transform: translateY(-10vh) scale(1);
+    }
 }
