@@ -2,74 +2,87 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Base JS Add HW3 B7+</title>
+		<title>Base JS HW3 N13</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Чтобы переключить Internet Explorer в режим последней версии --> 
 		<meta http-equiv="cleartype" content="on"/><!--Для включения сглаживания шрифтов -->
+		<link rel="stylesheet" type="text/css" href="css/styles.css"> <!--CSS для данной страницы-->
 		
 	</head>
 	<body>
+		<div class="wrapper">
+			<input type="button" value="ввод информации о напитке" onclick="addUserInfo()">
+			<input type="button" value="получение информации о напитке" onclick="getDrinkInfo()">
+			<input type="button" value="удаление информации о напитке" onclick="deleteDrinkInfo()">
+			<input type="button" value="перечень всех напитков" onclick="userDrinksList()">
+		</div>
 
 		<script>
 
 			'use strict'
 
-			let formatNumber = (numb, format) => {
-				let result = [];
-				let b = 0;
-				let dotPos = format.lastIndexOf('.'); //Позиция точки в образце
-				
-				if (dotPos !== -1 && dotPos !== format.length - 1) {
-					let n = (format.length - 1) - dotPos; //Кол-во знаков после запятой в образце
-					let newNumb = numb.toFixed(n);
-					let a = newNumb.lastIndexOf('.');  //Позиция точки в числе
-					let newNumbEnd = newNumb.substr(a); //Вырезаю в строку все цифры после точки					
-					
-					for (let i = dotPos - 1, j = a - 1; i >= 0; i--) {
-						if (format[i] === '#') {
-							result[b] = newNumb[j];
-							j--;
-							b++; 
-						}
-						if (format[i] === ' '){
-							result[b] = ' ';
-							b++;
-						}
-					}
-					result.reverse().push(newNumbEnd);
-				} else {
-					let newNumb = ( Math.round(numb) ).toString();
+			function HashStorageFunc () {
+				let self = this;
+				self.items = {};
 
-					for (let i = format.length - 1, j = newNumb.length - 1; j >= 0; i--) {
-						if (format[i] === '#') {
-							result[b] = newNumb[j];
-							j--;
-							b++; 
-						}
-						if (format[i] === ' '){
-							result[b] = ' ';
-							b++;
-						}
-					}
-					result.reverse()
-					if (dotPos === format.length - 1) {
-						result.push('.');
+				self.addValue = function (key, value) {					
+					self.items[key] = value;
+				}
+				self.getValue = function (key) {
+					return self.items[key];
+				}
+				self.deleteValue = function (key) {
+					if (key in self.items) {
+						delete self.items[key];
+						return true;
+					} else {
+						return false;
 					}
 				}
-				let resultStr = result.join('');
-
-				return resultStr;
+				self.getKeys = function () {
+					return Object.keys(self.items);
+				}
 			}
-			console.log( formatNumber(2.3,"# ### ###.##") );
-			console.log( formatNumber(12345.368,"# ### ###.##") );
-			console.log( formatNumber(12345.1,"# ### ###.##") );
-			console.log( formatNumber(12345.368,"# ## ## ##.##") );
-			console.log( formatNumber(12345.1,"# ### ###") );
-			console.log( formatNumber(12345.1,"# ### ###.") );
-			console.log( formatNumber(23.546,"# ### ###.") );
-			
+
+			let drinkStorage = new HashStorageFunc ();
+
+			function addUserInfo () {  //Функция грязная
+				let drinkName = prompt('Введите название напитка');
+				let containAlc = confirm('Если напиток алкогольный, нажмите "ОК", если нет - то "Отмена"') ? 'да' : 'нет';
+				let drinkRecipe = prompt('Ведите рецепт напитка');
+				let drinkInfo = `алкогольный: ${containAlc}
+рецепт приготовления:
+${drinkRecipe}`
+
+				drinkStorage.addValue(drinkName, drinkInfo);
+			}
+
+			function getDrinkInfo () {   //Функция грязная
+				let drinkName = prompt('Введите название напитка');
+
+				if (drinkName in drinkStorage.items) {
+					return alert(`напиток ${drinkName}
+${drinkStorage.getValue(drinkName)}`);
+				} else {
+					return alert('Такого напитка в хранилище нет :(');
+				}
+			}
+
+			function deleteDrinkInfo () {  //Функция грязная
+				let drinkName = prompt('Введите название напитка');
+
+				if (drinkStorage.deleteValue(drinkName)) {
+					return alert('Рецепт удалён');
+				} else {
+					return alert('Такого напитка в хранилище нет :(');
+				}
+			}
+
+			function userDrinksList () {
+				return alert(drinkStorage.getKeys());
+			}
 				
 		</script>
 

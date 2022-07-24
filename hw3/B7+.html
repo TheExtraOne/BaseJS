@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Base JS Add HW3 B7+</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Чтобы переключить Internet Explorer в режим последней версии --> 
+		<meta http-equiv="cleartype" content="on"/><!--Для включения сглаживания шрифтов -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			let formatNumber = (numb, format) => {
+				let result = [];
+				let b = 0;
+				let dotPos = format.lastIndexOf('.'); //Позиция точки в образце
+				
+				if (dotPos !== -1 && dotPos !== format.length - 1) {
+					let n = (format.length - 1) - dotPos; //Кол-во знаков после запятой в образце
+					let newNumb = numb.toFixed(n);
+					let a = newNumb.lastIndexOf('.');  //Позиция точки в числе
+					let newNumbEnd = newNumb.substr(a); //Вырезаю в строку все цифры после точки					
+					
+					for (let i = dotPos - 1, j = a - 1; i >= 0; i--) {
+						if (format[i] === '#') {
+							result[b] = newNumb[j];
+							j--;
+							b++; 
+						}
+						if (format[i] === ' '){
+							result[b] = ' ';
+							b++;
+						}
+					}
+					result.reverse().push(newNumbEnd);
+				} else {
+					let newNumb = ( Math.round(numb) ).toString();
+
+					for (let i = format.length - 1, j = newNumb.length - 1; j >= 0; i--) {
+						if (format[i] === '#') {
+							result[b] = newNumb[j];
+							j--;
+							b++; 
+						}
+						if (format[i] === ' '){
+							result[b] = ' ';
+							b++;
+						}
+					}
+					result.reverse()
+					if (dotPos === format.length - 1) {
+						result.push('.');
+					}
+				}
+				let resultStr = result.join('');
+
+				return resultStr;
+			}
+			console.log( formatNumber(2.3,"# ### ###.##") );
+			console.log( formatNumber(12345.368,"# ### ###.##") );
+			console.log( formatNumber(12345.1,"# ### ###.##") );
+			console.log( formatNumber(12345.368,"# ## ## ##.##") );
+			console.log( formatNumber(12345.1,"# ### ###") );
+			console.log( formatNumber(12345.1,"# ### ###.") );
+			console.log( formatNumber(23.546,"# ### ###.") );
+			
+				
+		</script>
+
+	</body>
+</html>

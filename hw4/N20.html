@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Base JS HW3 N20</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Чтобы переключить Internet Explorer в режим последней версии --> 
+		<meta http-equiv="cleartype" content="on"/><!--Для включения сглаживания шрифтов -->
+		
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			function squareRoots(a, b, c) {
+				const d = b ** 2 - 4 * a * c; // дискриминант
+				if (a === 0) {
+					if (b !== 0) {
+						return [ -c / b]; // линейное уравнение 
+					}
+					if (b === 0 && c !== 0) {
+						return []; // нет корней
+					} else {
+						return ['любое число'];
+					}
+				} else {
+					if (d < 0) {
+						return []; // нет корней
+					}
+					if (d === 0) {
+						return [ - b / (2 * a) ]; // один корень
+					}
+					const x1 = ( - b + Math.sqrt(d) ) / (2 * a);
+					const x2 = ( - b - Math.sqrt(d) ) /(2 * a);
+
+					return [x1, x2]; // два корня
+				}
+			}
+
+			function squareRootsTests() {
+
+				{
+					console.log('тест 1,1,1 -> нет корней');
+					const roots=squareRoots(1,1,1);
+					console.log( (roots.length==0)
+						?'пройден':'НЕ ПРОЙДЕН!' )
+				}
+
+				{
+					console.log('тест 1,-2,-3 -> два корня 3,-1');
+					const roots=squareRoots(1,-2,-3);
+					console.log( ((roots.length==2)&&(roots[0]==3)&&(roots[1]==-1))
+						?'пройден':'НЕ ПРОЙДЕН!' )
+				}
+
+				{
+					console.log('тест -1,-2,15 -> два корня -5,3');
+					const roots=squareRoots(-1,-2,15);
+					console.log( ((roots.length==2)&&(roots[0]==-5)&&(roots[1]==3))
+						?'пройден':'НЕ ПРОЙДЕН!' )
+				}
+
+				{
+					console.log('тест 1,12,36 -> один корень -6');
+					const roots=squareRoots(1,12,36);
+					console.log( ((roots.length==1)&&(roots[0]==-6))
+						?'пройден':'НЕ ПРОЙДЕН!' )
+				}
+
+				{
+					console.log('тест 0,5,-10 -> один корень 2');
+					const roots=squareRoots(0,5,-10);
+					console.log( ((roots.length==1)&&(roots[0]==2))
+						?'пройден':'НЕ ПРОЙДЕН!' )
+				}
+				{
+					console.log('тест 2,0,-32 -> два корня 4, -4');
+					const roots=squareRoots(2,0,-32);
+					console.log( ((roots.length === 2) && (roots[0] === 4) && (roots[1] === -4))
+						?'пройден':'НЕ ПРОЙДЕН!' )
+				}
+				{
+					console.log('тест 2,0,32 -> нет корней');
+					const roots=squareRoots(2,0,32);
+					console.log( ((roots.length === 0))
+						?'пройден':'НЕ ПРОЙДЕН!' )
+				}
+				{
+					console.log('тест 0,0,32 -> нет корней');
+					const roots=squareRoots(0,0,32);
+					console.log( ((roots.length === 0) )
+						?'пройден':'НЕ ПРОЙДЕН!' )
+				}
+				{
+					console.log('тест 0,0,0 -> любое число');
+					const roots=squareRoots(0,0,0);
+					console.log( ((roots.length === 1) && (roots[0] === 'любое число'))
+						?'пройден':'НЕ ПРОЙДЕН!' )
+				}
+
+			}
+			//squareRootsTests();
+
+			function ttt() {
+				const a = Number( prompt('Введите a') );
+				const b = Number( prompt('Введите b') );
+				const c = Number( prompt('Введите c') );
+				const roots = squareRoots(a, b, c);
+
+				if ( !roots.length ) {
+					alert('корней нет!');
+				}
+				else if ( roots.length === 1 ) {
+					alert('один корень: '+roots[0]);
+				}
+				else {
+					alert('два корня: '+roots[0]+' и '+roots[1]);
+				}
+			}
+			ttt();
+				
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #0c1920;
+}
+.wrapper{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items:center;
+}
+input{
+    width: 540px;
+    height: 90px;
+    font: 600 30px sans-serif;
+    cursor: pointer;
+    border-radius: 20px;
+    background: linear-gradient(45deg,cornflowerblue 0,#1abc9c 100%);
+    transition: all linear 0.3s;
+}
+input:hover{
+    background: linear-gradient(45deg,#4fc3dc 0,#96e5d5 100%);
+    transition: all linear 0.7s;
+    transform: scale(1.1);
+}
