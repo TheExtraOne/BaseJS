@@ -28,7 +28,7 @@
 					if (b === 0 && c !== 0) {
 						return []; // нет корней
 					} else {
-						return ['любое число'];
+						return ['x']; //любое число
 					}
 				} else {
 					if (d < 0) {
@@ -101,7 +101,7 @@
 				{
 					console.log('тест 0,0,0 -> любое число');
 					const roots=squareRoots(0,0,0);
-					console.log( ((roots.length === 1) && (roots[0] === 'любое число'))
+					console.log( ((roots.length === 1) && (roots[0] === 'x'))
 						?'пройден':'НЕ ПРОЙДЕН!' )
 				}
 
@@ -115,6 +115,9 @@
 
 				if ( !roots.length ) {
 					alert('корней нет!');
+				}
+				else if ( roots.length === 1 && roots[0] === 'x') {
+					alert('корнем может быть любое число');
 				}
 				else if ( roots.length === 1 ) {
 					alert('один корень: '+roots[0]);
