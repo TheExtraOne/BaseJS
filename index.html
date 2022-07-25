@@ -89,30 +89,33 @@
 			}
 
 			let drinkStorage = new HashStorageFunc ();
+			let coct = new HashStorageFunc ();
 
-			function addUserInfo () {  //Функция грязная
+			function addUserInfo () {  
 				let drinkName = prompt('Введите название напитка');
 				let containAlc = confirm('Если напиток алкогольный, нажмите "ОК", если нет - то "Отмена"') ? 'да' : 'нет';
 				let drinkRecipe = prompt('Ведите рецепт напитка');
-				let drinkInfo = `алкогольный: ${containAlc}
-рецепт приготовления:
-${drinkRecipe}`
+				
 
-				drinkStorage.addValue(drinkName, drinkInfo);
+				coct.addValue('alco', containAlc);
+				coct.addValue('recipe', drinkRecipe);
+
+				drinkStorage.addValue(drinkName, coct);
 			}
 
-			function getDrinkInfo () {   //Функция грязная
+			function getDrinkInfo () {   
 				let drinkName = prompt('Введите название напитка');
 
 				if (drinkName in drinkStorage.items) {
 					return alert(`напиток ${drinkName}
-${drinkStorage.getValue(drinkName)}`);
+алкогольный: ${coct.getValue('alco')}
+рецепт приготовления: ${coct.getValue('recipe')}`);
 				} else {
 					return alert('Такого напитка в хранилище нет :(');
 				}
 			}
 
-			function deleteDrinkInfo () {  //Функция грязная
+			function deleteDrinkInfo () {  
 				let drinkName = prompt('Введите название напитка');
 
 				if (drinkStorage.deleteValue(drinkName)) {
@@ -125,6 +128,8 @@ ${drinkStorage.getValue(drinkName)}`);
 			function userDrinksList () {
 				return alert(drinkStorage.getKeys());
 			}
+	
+
 				
 		</script>
 
