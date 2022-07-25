@@ -90,23 +90,23 @@
 
 			let drinkStorage = new HashStorageFunc ();
 			//let coct = new HashStorageFunc ();
-			let coct = {};
+			//let coct = {};
 
 			function addUserInfo () {  
 				let drinkName = prompt('Введите название напитка');
 				let containAlc = confirm('Если напиток алкогольный, нажмите "ОК", если нет - то "Отмена"') ? 'да' : 'нет';
 				let drinkRecipe = prompt('Ведите рецепт напитка');
-				coct = {
+				/*coct = {
 					'alco': containAlc,
 					'recipe': drinkRecipe
-				};
+				};*/
 
-				//drinkStorage.addValue(drinkName, coct);
+				drinkStorage.addValue(drinkName, {'alco' : containAlc, 'recipe' : drinkRecipe,});
 				/*drinkStorage.addValue(drinkName, {'alco' : containAlc,
 												  'recipe' : drinkRecipe,
 												  toString() {return `алкогольный: ${this['alco']}
 рецепт приготовления: ${this['recipe']}`}});*/
-				drinkStorage.addValue(drinkName, coct);
+				//drinkStorage.addValue(drinkName, coct);
 			}
 
 			function getDrinkInfo () {   
@@ -118,11 +118,19 @@ ${drinkStorage.getValue(drinkName)}`);
 				} else {
 					return alert('Такого напитка в хранилище нет :(');
 				}*/
-				coct.toString = function drinkNameToString() {
+				/*coct.toString = function drinkNameToString() {
 					return `алкогольный: ${this['alco']},
 рецепт приготовления: ${this['recipe']} `;
 				}
-				return ( drinkStorage.getValue(drinkName) ) ? alert('напиток '+ drinkName + '\n' + drinkStorage.getValue(drinkName)) : alert('Такого напитка в хранилище нет :(');
+				return ( drinkStorage.getValue(drinkName) ) ? alert('напиток '+ drinkName + '\n' + drinkStorage.getValue(drinkName)) : alert('Такого напитка в хранилище нет :(');*/
+				let result = drinkStorage.getValue(drinkName);
+				if (result) {
+					return alert(`напиток ${drinkName}
+	алкогольный: ${result['alco']}
+	рецепт приготовления: ${result['recipe']}`)
+				} else {
+					return alert('Такого напитка в хранилище нет :(');
+				}
 			}
 
 			function deleteDrinkInfo () {  
