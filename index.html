@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Base JS HW3 N13</title>
+		<title>Base JS HW3 N14</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
@@ -65,26 +65,27 @@
 
 			'use strict'
 
-			function HashStorageFunc () {
-				let self = this;
-				self.items = {};
+			class HashStorageFunc {
+				constructor () {
+					this.items = {};
+				}
 
-				self.addValue = function (key, value) {					
-					self.items[key] = value;
+				addValue (key, value) {					
+					this.items[key] = value;
 				}
-				self.getValue = function (key) {
-					return self.items[key];
+				getValue (key) {
+					return this.items[key];
 				}
-				self.deleteValue = function (key) {
-					if (key in self.items) {
-						delete self.items[key];
+				deleteValue (key) {
+					if (key in this.items) {
+						delete this.items[key];
 						return true;
 					} else {
 						return false;
 					}
 				}
-				self.getKeys = function () {
-					return Object.keys(self.items);
+				getKeys () {
+					return Object.keys(this.items);
 				}
 			}
 
@@ -95,7 +96,7 @@
 				let containAlc = confirm('Если напиток алкогольный, нажмите "ОК", если нет - то "Отмена"') ? 'да' : 'нет';
 				let drinkRecipe = prompt('Ведите рецепт напитка');
 
-				drinkStorage.addValue(drinkName, {'alco' : containAlc, 'recipe' : drinkRecipe,});
+				drinkStorage.addValue( drinkName, {'alco' : containAlc, 'recipe' : drinkRecipe,} );
 			}
 
 			function getDrinkInfo () {   
@@ -114,8 +115,6 @@
 			function userDrinksList () {
 				return alert(drinkStorage.getKeys());
 			}
-	
-
 				
 		</script>
 
