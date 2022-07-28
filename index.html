@@ -11,91 +11,90 @@
 		<link rel="stylesheet" type="text/css" href="css/styles.css"> <!--CSS для данной страницы-->
 	</head>
 	<body>
-		<input type=button value='1. Начать вычисления!' onclick='putChess(0)'> 
-		<input type=button value='2. Показать количество решений' onclick='showNumber()'>
-		<input type=button value='3. Показать выбранное решение' onclick='showChoosenResult()'>
 
 		<script>
 
 			'use strict'
 
-			let result = new Array(8);  //Может быть лучше 8 вынести в отдельную переменную, если понадобиться сменить размер поля?
+			let board = [
+				['H','','','','','','','',],
+				['','','','','','','','',],
+				['','','','','','','','',],
+				['','','','','','','','',],
+				['','','','','','','','',],
+				['','','','','','','','',],
+				['','','','','','','','',],
+				['','','','','','','','',]
+				];
 
-			/*let draw = () => { //Наверное, правильнее было бы построить таблицу, но для меня это пока сложно. Решила построить из кубиков 40х40, где в ряду их 8.
-				document.write('<div class="board">');
-				//body.insertAdjacentHTML('afterbegin', '<div class="board" id="board">');     
-				for (let row = 0; row < 8; row++) { 
-					for (let column = 0; column < 8; column++) { 
-						let figure = (result[column] === row) ? "&#9733;" : " "; //Расставляю фигуры
-						let cls = 'class="cell ';
-						let color = ( (row + column) % 2) ? 'black"': 'white"'; //Четная сумма % 2 = 0, нечетная = 1. Четный ряд четная колонка - белый, четный ряд нечетная колонка - черный, нечетный ряд четная колонка - черный, нечетный ряд нечетная колонка- белый.
-						//let ins = `<div ${cls} ${color}>${figure}</div>`;
-						document.write('<div ', cls, color, '>', figure, '</div>'); 
-						//board.insertAdjacentHTML('afterbegin', ins);
-						//let div = document.createElement('div');
-						//div.className = 'class="cell ' + ( (row + column) % 2) ? 'black"': 'white"';
-						//div.innerHTML = (result[column] === row) ? "&#9733;" : " ";
-						//board.prepend(div);
-					}
-					document.write('<br>');
-					//cell.insertAdjacentHTML('afterend', '<br>');
+			let ways = [ [0, 0] ]; //первое число строка, второе столбец
+
+			//Чтобы задать позицию коня, внесите в соответствующий угол доски 'H' и исправте координаты в ways
+			let moveHorse = (result, step) => {
+				//console.log(JSON.stringify(result)); 
+				if (result.length === 64) {
+					return result;
 				}
-				document.write('</div>');
-				//board.insertAdjacentHTML('beforeend', '</div>');
+				let row = result[result.length - 1][0];
+				let horsePosition = result[result.length - 1][1];
+				board[row][horsePosition] = step;
+				//console.log(JSON.stringify(board));
+				if (row < 7 && horsePosition < 6 && board[row + 1][horsePosition + 2] === '') {
+					result.push([row + 1, horsePosition + 2]);
+					//console.log(2);
+					result = moveHorse(result, step + 1);
+				}
+				if (row < 6 && horsePosition < 7 && board[row + 2][horsePosition + 1] === '') {
+					result.push([row + 2, horsePosition + 1]);
+					//console.log(3);
+					result = moveHorse(result, step + 1);
+				}
+				if (row < 6 && horsePosition > 0 && board[row + 2][horsePosition - 1] === '') {
+					result.push([row + 2, horsePosition - 1]);
+					//console.log(4);
+					result = moveHorse(result, step + 1);
+				}
+				if (row < 7 && horsePosition > 1 && board[row + 1][horsePosition - 2] === '') {
+					result.push([row + 1, horsePosition - 2]);
+					//console.log(5);
+					result = moveHorse(result, step + 1);
+				}
+				if (row > 0 && horsePosition > 1 && board[row - 1][horsePosition - 2] === '') {
+					result.push([row - 1, horsePosition - 2]);
+					//console.log(6);
+					result = moveHorse(result, step + 1);
+				}
+				if (row > 1 && horsePosition > 0 && board[row - 2][horsePosition - 1] === '') {
+					result.push([row - 2, horsePosition - 1]);
+					//console.log(7);
+					result = moveHorse(result, step + 1);
+				}
+				if (row > 1 && horsePosition < 7 && board[row - 2][horsePosition + 1] === '') {
+					result.push([row - 2, horsePosition + 1]);
+					//console.log(8);
+					result = moveHorse(result, step + 1);
+				}
+				if (row > 0 && horsePosition < 6 && board[row - 1][horsePosition + 2] === '') {
+					result.push([row - 1, horsePosition + 2]);
+					//console.log(1);
+					result = moveHorse(result, step + 1);
+				}
 				
-			}*/
-
-			let numberOfSol = 0; // Кол-во решений
-			//let n;     //Кол-во расставленных ферзей
-			let arrResults = [];
-
-			let putChess = (n) => {			
-				if (n >= 8) { 					
-					numberOfSol++;
-					//draw();
-					arrResults.push(result.slice()); 
-				}
-				
-				for (let row = 0, column; row < 8; row++) {  			
-					for (column = 0; column < n; column++) {   // Проверяю поставленных					
-						if (result[column] === row) {   //Ферзи не могут стоять в одном ряду
-							break;
-						}                                
-						if (Math.abs(result[column] - row ) === n - column) { //Ферзи не могут стоять по диагонали от других ферзей. Я сравниваю разность координат предыдущего ферзя с проверяемой клеткой и если они равны, то находятся на одной диагонали
-							break;
-						}
-					}
-					if (column === n) {
-						result[n] = row;
-						putChess(n + 1);                       
+				let test = true;
+				for (let i = 0; i < board.length; i++) {
+					if ( board[i].includes('') ) {
+						test = false;
+						break;
 					}
 				}
-			}
-			
-			let showNumber = () => {
-				alert(`Найдено решений: ${numberOfSol}`);
-				//console.log(arrResults);
-			}
-
-			let showChoosenResult = () => {
-				let i = +(prompt('Введите номер решения'));
-				let arrtoDraw = arrResults[i - 1];
-				console.log('--------------------------');
-				for (let j = 0; j < 8; j++) {
-					let row = '';
-					for (let a = 0 ; a < 8; a++){
-						if ( a === arrtoDraw.indexOf(j) ){
-							row += ' F ';
-						} else {
-							row +=' X ';
-						}
-					}
-					console.log(`${j + 1}) ${row}`);
+				if (test === false) {
+					board[row][horsePosition] = '';
+					result.pop();
+					return result;
 				}
-				console.log('--------------------------');
-				alert('Проверьте консоль');
 			}
-
+			moveHorse(ways, 1);
+			console.log(board);
 		</script>
 
 	</body>

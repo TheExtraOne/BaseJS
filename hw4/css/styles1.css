@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/*body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+}*/
+input{
+    margin: 10px;
+    padding: 5px;
+}
+.board{
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    border: 2px solid black;       
+}
+.cell{
+    display: inline-block;
+    border: 1px solid black;
+    width: 40px;
+    height: 40px;
+    font-size: 29px;
+    vertical-align: middle;
+}
+.white{
+    background-color: white;
+    color: black;
+}
+.black{
+    background-color: black;
+    color: white;
+}
