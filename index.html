@@ -11,9 +11,9 @@
 		<link rel="stylesheet" type="text/css" href="css/styles.css"> <!--CSS для данной страницы-->
 	</head>
 	<body>
-		<!--<input type=button value='1. Начать вычисления!' onclick='putChess(0)'> 
+		<input type=button value='1. Начать вычисления!' onclick='putChess(0)'> 
 		<input type=button value='2. Показать количество решений' onclick='showNumber()'>
-		<input type=button value='3. Показать выбранное решение' onclick='showChoosenResult()'>-->
+		<input type=button value='3. Показать выбранное решение' onclick='showChoosenResult()'>
 
 		<script>
 
@@ -21,7 +21,7 @@
 
 			let result = new Array(8);  //Может быть лучше 8 вынести в отдельную переменную, если понадобиться сменить размер поля?
 
-			let draw = () => { //Наверное, правильнее было бы построить таблицу, но для меня это пока сложно. Решила построить из кубиков 40х40, где в ряду их 8.
+			/*let draw = () => { //Наверное, правильнее было бы построить таблицу, но для меня это пока сложно. Решила построить из кубиков 40х40, где в ряду их 8.
 				document.write('<div class="board">');
 				//body.insertAdjacentHTML('afterbegin', '<div class="board" id="board">');     
 				for (let row = 0; row < 8; row++) { 
@@ -31,7 +31,7 @@
 						let color = ( (row + column) % 2) ? 'black"': 'white"'; //Четная сумма % 2 = 0, нечетная = 1. Четный ряд четная колонка - белый, четный ряд нечетная колонка - черный, нечетный ряд четная колонка - черный, нечетный ряд нечетная колонка- белый.
 						//let ins = `<div ${cls} ${color}>${figure}</div>`;
 						document.write('<div ', cls, color, '>', figure, '</div>'); 
-						//board.insertAdjacentHTML('afterbegin', ins);*/
+						//board.insertAdjacentHTML('afterbegin', ins);
 						//let div = document.createElement('div');
 						//div.className = 'class="cell ' + ( (row + column) % 2) ? 'black"': 'white"';
 						//div.innerHTML = (result[column] === row) ? "&#9733;" : " ";
@@ -43,17 +43,16 @@
 				document.write('</div>');
 				//board.insertAdjacentHTML('beforeend', '</div>');
 				
-			}
+			}*/
 
 			let numberOfSol = 0; // Кол-во решений
 			//let n;     //Кол-во расставленных ферзей
 			let arrResults = [];
 
 			let putChess = (n) => {			
-				if (n >= 8) { 
-					//console.log(result);					
+				if (n >= 8) { 					
 					numberOfSol++;
-					draw();
+					//draw();
 					arrResults.push(result.slice()); 
 				}
 				
@@ -72,19 +71,31 @@
 					}
 				}
 			}
-			putChess(0);
 			
 			let showNumber = () => {
 				alert(`Найдено решений: ${numberOfSol}`);
+				//console.log(arrResults);
 			}
 
 			let showChoosenResult = () => {
 				let i = +(prompt('Введите номер решения'));
-				let result = arrResults[i - 1];
-				draw();
+				let arrtoDraw = arrResults[i - 1];
+				console.log('--------------------------');
+				for (let j = 0; j < 8; j++) {
+					let row = '';
+					for (let a = 0 ; a < 8; a++){
+						if ( a === arrtoDraw.indexOf(j) ){
+							row += ' F ';
+						} else {
+							row +=' X ';
+						}
+					}
+					console.log(`${j + 1}) ${row}`);
+				}
+				console.log('--------------------------');
+				alert('Проверьте консоль');
 			}
 
-			console.log(arrResults);
 		</script>
 
 	</body>
