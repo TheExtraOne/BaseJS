@@ -2,13 +2,13 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Chess</title>
+		<title>Chess hourse</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Чтобы переключить Internet Explorer в режим последней версии --> 
 		<meta http-equiv="cleartype" content="on"/><!--Для включения сглаживания шрифтов -->
-		<link rel="stylesheet" type="text/css" href="css/styles.css"> <!--CSS для данной страницы-->
+		<!--<link rel="stylesheet" type="text/css" href="css/styles.css">--> <!--CSS для данной страницы-->
 	</head>
 	<body>
 
@@ -29,69 +29,75 @@
 
 			let ways = [ [0, 0] ]; //первое число строка, второе столбец
 
-			//Чтобы задать позицию коня, внесите в соответствующий угол доски 'H' и исправте координаты в ways
+			//Чтобы задать позицию коня, внесите в соответствующий угол доски 'H' (H = hourse) и исправте координаты в ways
+
 			let moveHorse = (result, step) => {
 				//console.log(JSON.stringify(result)); 
 				if (result.length === 64) {
 					return result;
 				}
+				
 				let row = result[result.length - 1][0];
 				let horsePosition = result[result.length - 1][1];
 				board[row][horsePosition] = step;
 				//console.log(JSON.stringify(board));
+
+				let iWillNotRepeatMySelf = (number1, number2) => {
+					result.push([row + number1, horsePosition + number2]);
+					result = moveHorse(result, step + 1);
+				}
+
+				//Вправо и вниз
 				if (row < 7 && horsePosition < 6 && board[row + 1][horsePosition + 2] === '') {
-					result.push([row + 1, horsePosition + 2]);
-					//console.log(2);
-					result = moveHorse(result, step + 1);
+					//result.push([row + 1, horsePosition + 2]);
+					//result = moveHorse(result, step + 1);
+					iWillNotRepeatMySelf(1, 2);
 				}
+				//Вниз и вправо
 				if (row < 6 && horsePosition < 7 && board[row + 2][horsePosition + 1] === '') {
-					result.push([row + 2, horsePosition + 1]);
-					//console.log(3);
-					result = moveHorse(result, step + 1);
+					//result.push([row + 2, horsePosition + 1]);
+					//result = moveHorse(result, step + 1);
+					iWillNotRepeatMySelf(2, 1);
 				}
+				//Вниз и влево
 				if (row < 6 && horsePosition > 0 && board[row + 2][horsePosition - 1] === '') {
-					result.push([row + 2, horsePosition - 1]);
-					//console.log(4);
-					result = moveHorse(result, step + 1);
+					//result.push([row + 2, horsePosition - 1]);
+					//result = moveHorse(result, step + 1);
+					iWillNotRepeatMySelf(2, -1);
 				}
+				//Влево и вниз
 				if (row < 7 && horsePosition > 1 && board[row + 1][horsePosition - 2] === '') {
-					result.push([row + 1, horsePosition - 2]);
-					//console.log(5);
-					result = moveHorse(result, step + 1);
+					//result.push([row + 1, horsePosition - 2]);
+					//result = moveHorse(result, step + 1);
+					iWillNotRepeatMySelf(1, -2);
 				}
+				//Влево и вверх
 				if (row > 0 && horsePosition > 1 && board[row - 1][horsePosition - 2] === '') {
-					result.push([row - 1, horsePosition - 2]);
-					//console.log(6);
-					result = moveHorse(result, step + 1);
+					//result.push([row - 1, horsePosition - 2]);
+					//result = moveHorse(result, step + 1);
+					iWillNotRepeatMySelf(-1, -2);
 				}
+				//Вверх и влево
 				if (row > 1 && horsePosition > 0 && board[row - 2][horsePosition - 1] === '') {
-					result.push([row - 2, horsePosition - 1]);
-					//console.log(7);
-					result = moveHorse(result, step + 1);
+					//result.push([row - 2, horsePosition - 1]);
+					//result = moveHorse(result, step + 1);
+					iWillNotRepeatMySelf(-2, -1);
 				}
+				//Вверх и вправо
 				if (row > 1 && horsePosition < 7 && board[row - 2][horsePosition + 1] === '') {
-					result.push([row - 2, horsePosition + 1]);
-					//console.log(8);
-					result = moveHorse(result, step + 1);
+					//result.push([row - 2, horsePosition + 1]);
+					//result = moveHorse(result, step + 1);
+					iWillNotRepeatMySelf(-2, 1);
 				}
+				//Вправо и вверх
 				if (row > 0 && horsePosition < 6 && board[row - 1][horsePosition + 2] === '') {
-					result.push([row - 1, horsePosition + 2]);
-					//console.log(1);
-					result = moveHorse(result, step + 1);
+					//result.push([row - 1, horsePosition + 2]);
+					//result = moveHorse(result, step + 1);
+					iWillNotRepeatMySelf(-1, 2);
 				}
 				
-				let test = true;
-				for (let i = 0; i < board.length; i++) {
-					if ( board[i].includes('') ) {
-						test = false;
-						break;
-					}
-				}
-				if (test === false) {
-					board[row][horsePosition] = '';
-					result.pop();
-					return result;
-				}
+				result.pop();
+				return result;
 			}
 			moveHorse(ways, 1);
 			console.log(board);
