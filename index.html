@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Chess hourse</title>
+		<title>Scales</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
@@ -16,93 +16,65 @@
 
 			'use strict'
 
-			let board = [
-				['H','','','','','','','',],
-				['','','','','','','','',],
-				['','','','','','','','',],
-				['','','','','','','','',],
-				['','','','','','','','',],
-				['','','','','','','','',],
-				['','','','','','','','',],
-				['','','','','','','','',]
-				];
-
-			let ways = [ [0, 0] ]; //первое число строка, второе столбец
-
-			//Чтобы задать позицию коня, внесите в соответствующий угол доски 'H' (H = hourse) и исправьте координаты в ways
-
-			let moveHorse = (result, step) => {
-				//console.log(JSON.stringify(result)); 
-				if (result.length === 64) {
-					return result;
+			class ProductProto {
+				constructor(name, weight) {
+					this.name = name;
+					this.weight = weight;
 				}
-				
-				let row = result[result.length - 1][0];
-				let horsePosition = result[result.length - 1][1];
-				board[row][horsePosition] = step;
-				//console.log(JSON.stringify(board));
-
-				let iWillNotRepeatMySelf = (number1, number2) => {
-					//if ( (row + number1 < 8 ||  row + number1 >= 0) && (horsePosition + number2 >= 0 || horsePosition + number2 < 8) && board[row + number1][horsePosition + number2] === '') {
-						result.push([row + number1, horsePosition + number2]);
-						result = moveHorse(result, step + 1);
-					//}
+				getScale() {
+					return (`Вес: ${this.weight}`);
 				}
-
-				//Вправо и вниз
-				if (row < 7 && horsePosition < 6 && board[row + 1][horsePosition + 2] === '') {
-					//result.push([row + 1, horsePosition + 2]);
-					//result = moveHorse(result, step + 1);
-					iWillNotRepeatMySelf(1, 2);
+				getName() {
+					return (`Название: ${this.name}`);
 				}
-				//Вниз и вправо
-				if (row < 6 && horsePosition < 7 && board[row + 2][horsePosition + 1] === '') {
-					//result.push([row + 2, horsePosition + 1]);
-					//result = moveHorse(result, step + 1);
-					iWillNotRepeatMySelf(2, 1);
-				}
-				//Вниз и влево
-				if (row < 6 && horsePosition > 0 && board[row + 2][horsePosition - 1] === '') {
-					//result.push([row + 2, horsePosition - 1]);
-					//result = moveHorse(result, step + 1);
-					iWillNotRepeatMySelf(2, -1);
-				}
-				//Влево и вниз
-				if (row < 7 && horsePosition > 1 && board[row + 1][horsePosition - 2] === '') {
-					//result.push([row + 1, horsePosition - 2]);
-					//result = moveHorse(result, step + 1);
-					iWillNotRepeatMySelf(1, -2);
-				}
-				//Влево и вверх
-				if (row > 0 && horsePosition > 1 && board[row - 1][horsePosition - 2] === '') {
-					//result.push([row - 1, horsePosition - 2]);
-					//result = moveHorse(result, step + 1);
-					iWillNotRepeatMySelf(-1, -2);
-				}
-				//Вверх и влево
-				if (row > 1 && horsePosition > 0 && board[row - 2][horsePosition - 1] === '') {
-					//result.push([row - 2, horsePosition - 1]);
-					//result = moveHorse(result, step + 1);
-					iWillNotRepeatMySelf(-2, -1);
-				}
-				//Вверх и вправо
-				if (row > 1 && horsePosition < 7 && board[row - 2][horsePosition + 1] === '') {
-					//result.push([row - 2, horsePosition + 1]);
-					//result = moveHorse(result, step + 1);
-					iWillNotRepeatMySelf(-2, 1);
-				}
-				//Вправо и вверх
-				if (row > 0 && horsePosition < 6 && board[row - 1][horsePosition + 2] === '') {
-					//result.push([row - 1, horsePosition + 2]);
-					//result = moveHorse(result, step + 1);
-					iWillNotRepeatMySelf(-1, 2);
-				}
-				
-				result.pop();
-				return result;
 			}
-			moveHorse(ways, 1);
-			console.log(board);
+
+			class Apple extends ProductProto {
+				constructor(name, weight, price) {
+					super(name, weight);
+					this.price = price;  //Добавила свойство "цена", чтобы хоть чем-то отличалось
+				}
+			}
+
+			class Tomato extends ProductProto {
+				constructor(name, weight, ripe) {
+					super(name, weight);
+					this.ripe = ripe;        //Добавила свойство "спелость", чтобы хоть чем-то отличалось
+				}
+			}
+
+			class Scales {
+				constructor () {
+					this.items = [];
+				}
+				add(item) {
+					this.items.push(item);
+				}
+				getSumScale() {
+					let sum = this.items.reduce((sum, current) => sum + current.weight, 0);
+					return sum;
+				}
+				getNameList() {
+					return this.items.map(item => item.name);
+				}
+			}
+
+			let marketScales = new Scales;
+			
+			let banana = new ProductProto('Banana', 0.3);
+			let readApple = new Apple('Read apple', 0.2, 0.50);
+			let oxTomato = new Tomato('Ox heart tomato', 0.4, 'juicy');
+
+			marketScales.add(banana);
+			marketScales.add(readApple);
+			marketScales.add(oxTomato);
+			console.log(marketScales.getSumScale());
+			console.log(marketScales.getNameList());
+			//console.log(readApple.getScale());
+			//console.log(oxTomato.getName());
+			//console.log(marketScales);
+
+
 		</script>
 
 	</body>
