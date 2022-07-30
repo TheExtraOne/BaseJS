@@ -43,8 +43,10 @@
 				//console.log(JSON.stringify(board));
 
 				let iWillNotRepeatMySelf = (number1, number2) => {
-					result.push([row + number1, horsePosition + number2]);
-					result = moveHorse(result, step + 1);
+					//if ( (row + number1 < 8 ||  row + number1 >= 0) && (horsePosition + number2 >= 0 || horsePosition + number2 < 8) && board[row + number1][horsePosition + number2] === '') {
+						result.push([row + number1, horsePosition + number2]);
+						result = moveHorse(result, step + 1);
+					//}
 				}
 
 				//Вправо и вниз
