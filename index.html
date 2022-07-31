@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Scales</title>
+		<title>Palindroms</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
 		<!-- saved from url=(0014)about:internet -->
@@ -16,64 +16,47 @@
 
 			'use strict'
 
-			class ProductProto {
-				constructor(name, weight) {
-					this.name = name;
-					this.weight = weight;
+			let CheckIsPalindrom = (arr) => {
+				let rusAlphabet = 'ёйцукенгшщзхфывапролджэячсмитбю'; //Можно переписать на set и использовать set.has(value) вместо includes
+				
+				let arrFiltered = arr.filter( (letter) => rusAlphabet.includes(letter) );
+				//console.log(arrFiltered);
+
+				let arrReduced = arrFiltered.reduce( (newArr, letter, letterIndex) => {
+					if (arrFiltered.length % 2 === 0) {  //Для четных массивов
+						if (letterIndex < arrFiltered.length / 2) {   //Для первой половины массива
+							newArr.push(letter); 
+						} else {     //Для второй половины массива
+							if (letter === newArr[newArr.length - 1]) {              
+								newArr.pop();
+							} else {
+								newArr.push(letter);
+							}
+						}
+					} else {   //Для нечетных массивов
+						if (letterIndex < (arrFiltered.length  - 1) / 2) {  //Для первой половины массива без центральной буквы
+							newArr.push(letter);
+						}
+						if (letterIndex > (arrFiltered.length  - 1) / 2) {  //Для второй половины массива без центральной буквы
+							if (letter === newArr[newArr.length - 1]) {
+								newArr.pop();
+							} else {
+								newArr.push(letter);
+							}
+						}
+					}
+					return newArr;
+				}, []);
+				
+				if (arrReduced.length === 0) {
+					return true;
 				}
-				getScale() {
-					return (`Вес: ${this.weight}`);
-				}
-				getName() {
-					return (`Название: ${this.name}`);
-				}
+				return false;
+
 			}
 
-			class Apple extends ProductProto {
-				constructor(name, weight, price) {
-					super(name, weight);
-					this.price = price;  //Добавила свойство "цена", чтобы хоть чем-то отличалось
-				}
-			}
-
-			class Tomato extends ProductProto {
-				constructor(name, weight, ripe) {
-					super(name, weight);
-					this.ripe = ripe;        //Добавила свойство "спелость", чтобы хоть чем-то отличалось
-				}
-			}
-
-			class Scales {
-				constructor () {
-					this.items = [];
-				}
-				add(item) {
-					this.items.push(item);
-				}
-				getSumScale() {
-					let sum = this.items.reduce((sum, current) => sum + current.weight, 0);
-					return sum;
-				}
-				getNameList() {
-					return this.items.map(item => item.name);
-				}
-			}
-
-			let marketScales = new Scales;
-			
-			let banana = new ProductProto('Banana', 0.3);
-			let readApple = new Apple('Read apple', 0.2, 0.50);
-			let oxTomato = new Tomato('Ox heart tomato', 0.4, 'juicy');
-
-			marketScales.add(banana);
-			marketScales.add(readApple);
-			marketScales.add(oxTomato);
-			console.log(marketScales.getSumScale());
-			console.log(marketScales.getNameList());
-			//console.log(readApple.getScale());
-			//console.log(oxTomato.getName());
-			//console.log(marketScales);
-
+			let input = (prompt('Введите строку')).toLocaleLowerCase().split('');
+			console.log( (CheckIsPalindrom(input)) ? 'Это палиндром' : 'Это не палиндром');
 
 		</script>
 
