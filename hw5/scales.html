@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Scales</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Чтобы переключить Internet Explorer в режим последней версии --> 
+		<meta http-equiv="cleartype" content="on"/><!--Для включения сглаживания шрифтов -->
+		<!--<link rel="stylesheet" type="text/css" href="css/styles.css">--> <!--CSS для данной страницы-->
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			class ProductProto {
+				constructor(name, weight) {
+					this.name = name;
+					this.weight = weight;
+				}
+				getScale() {
+					return (`Вес: ${this.weight}`);
+				}
+				getName() {
+					return (`Название: ${this.name}`);
+				}
+			}
+
+			class Apple extends ProductProto {
+				constructor(name, weight, price) {
+					super(name, weight);
+					this.price = price;  //Добавила свойство "цена", чтобы хоть чем-то отличалось
+				}
+			}
+
+			class Tomato extends ProductProto {
+				constructor(name, weight, ripe) {
+					super(name, weight);
+					this.ripe = ripe;        //Добавила свойство "спелость", чтобы хоть чем-то отличалось
+				}
+			}
+
+			class Scales {
+				constructor () {
+					this.items = [];
+				}
+				add(item) {
+					this.items.push(item);
+				}
+				getSumScale() {
+					let sum = this.items.reduce((sum, current) => sum + current.weight, 0);
+					return sum;
+				}
+				getNameList() {
+					return this.items.map(item => item.name);
+				}
+			}
+
+			let marketScales = new Scales;
+			
+			let banana = new ProductProto('Banana', 0.3);
+			let readApple = new Apple('Read apple', 0.2, 0.50);
+			let oxTomato = new Tomato('Ox heart tomato', 0.4, 'juicy');
+
+			marketScales.add(banana);
+			marketScales.add(readApple);
+			marketScales.add(oxTomato);
+			console.log(marketScales.getSumScale());
+			console.log(marketScales.getNameList());
+			//console.log(readApple.getScale());
+			//console.log(oxTomato.getName());
+			//console.log(marketScales);
+
+
+		</script>
+
+	</body>
+</html>
