@@ -23,6 +23,9 @@
 				//console.log(arrFiltered);
 
 				let arrReduced = arrFiltered.reduce( (newArr, letter, letterIndex) => {
+					if (letter === 'ё') {
+						letter = 'е';
+					}
 					if (arrFiltered.length % 2 === 0) {  //Для четных массивов
 						if (letterIndex < arrFiltered.length / 2) {   //Для первой половины массива
 							newArr.push(letter); 
@@ -34,7 +37,7 @@
 							}
 						}
 					} else {   //Для нечетных массивов
-						if (letterIndex < (arrFiltered.length  - 1) / 2) {  //Для первой половины массива без центральной буквы
+						if (letterIndex < (arrFiltered.length  - 1) / 2) {  //Для первой половины массива без центральной буквы							
 							newArr.push(letter);
 						}
 						if (letterIndex > (arrFiltered.length  - 1) / 2) {  //Для второй половины массива без центральной буквы
