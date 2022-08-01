@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Palindroms</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Чтобы переключить Internet Explorer в режим последней версии --> 
+		<meta http-equiv="cleartype" content="on"/><!--Для включения сглаживания шрифтов -->
+		<!--<link rel="stylesheet" type="text/css" href="css/styles.css">--> <!--CSS для данной страницы-->
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			let CheckIsPalindrom = (arr) => {
+				let rusAlphabet = 'ёйцукенгшщзхфывапролджэячсмитбю'; //Можно переписать на set и использовать set.has(value) вместо includes
+				
+				let arrFiltered = arr.filter( (letter) => rusAlphabet.includes(letter) );
+				//console.log(arrFiltered);
+
+				let arrReduced = arrFiltered.reduce( (newArr, letter, letterIndex) => {
+					if (letter === 'ё') {
+						letter = 'е';
+					}
+					if (arrFiltered.length % 2 === 0) {  //Для четных массивов
+						if (letterIndex < arrFiltered.length / 2) {   //Для первой половины массива
+							newArr.push(letter); 
+						} else {     //Для второй половины массива
+							if (letter === newArr[newArr.length - 1]) {              
+								newArr.pop();
+							} else {
+								newArr.push(letter);
+							}
+						}
+					} else {   //Для нечетных массивов
+						if (letterIndex < (arrFiltered.length  - 1) / 2) {  //Для первой половины массива без центральной буквы							
+							newArr.push(letter);
+						}
+						if (letterIndex > (arrFiltered.length  - 1) / 2) {  //Для второй половины массива без центральной буквы
+							if (letter === newArr[newArr.length - 1]) {
+								newArr.pop();
+							} else {
+								newArr.push(letter);
+							}
+						}
+					}
+					return newArr;
+				}, []);
+				
+				if (arrReduced.length === 0) {
+					return true;
+				}
+				return false;
+
+			}
+
+			let input = (prompt('Введите строку')).toLocaleLowerCase().split('');
+			console.log( (CheckIsPalindrom(input)) ? 'Это палиндром' : 'Это не палиндром');
+
+		</script>
+
+	</body>
+</html>

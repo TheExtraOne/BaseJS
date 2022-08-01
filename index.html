@@ -16,49 +16,32 @@
 
 			'use strict'
 
-			let CheckIsPalindrom = (arr) => {
-				let rusAlphabet = 'ёйцукенгшщзхфывапролджэячсмитбю'; //Можно переписать на set и использовать set.has(value) вместо includes
-				
-				let arrFiltered = arr.filter( (letter) => rusAlphabet.includes(letter) );
-				//console.log(arrFiltered);
+			let CheckIsPalindrom = (str) => {
+				let rusAlphabet = 'ёйцукенгшщзхфывапролджэячсмитбюЁЙЦУКЕНГШЩЗХФЫВАПРОЛДЖЭЯЧСМИТБЮ'; //Можно переписать на set и использовать set.has(value) вместо includes			
+				let arrFiltered = str.split('').filter( (letter) => rusAlphabet.includes(letter) );
 
-				let arrReduced = arrFiltered.reduce( (newArr, letter, letterIndex) => {
+				let result = arrFiltered.reduce( (sum, letter, letterIndex) => {
+					letter = letter.toLowerCase();
+					let mirrorLetter = arrFiltered[arrFiltered.length - 1 - letterIndex].toLowerCase();
+
 					if (letter === 'ё') {
 						letter = 'е';
 					}
-					if (arrFiltered.length % 2 === 0) {  //Для четных массивов
-						if (letterIndex < arrFiltered.length / 2) {   //Для первой половины массива
-							newArr.push(letter); 
-						} else {     //Для второй половины массива
-							if (letter === newArr[newArr.length - 1]) {              
-								newArr.pop();
-							} else {
-								newArr.push(letter);
-							}
-						}
-					} else {   //Для нечетных массивов
-						if (letterIndex < (arrFiltered.length  - 1) / 2) {  //Для первой половины массива без центральной буквы							
-							newArr.push(letter);
-						}
-						if (letterIndex > (arrFiltered.length  - 1) / 2) {  //Для второй половины массива без центральной буквы
-							if (letter === newArr[newArr.length - 1]) {
-								newArr.pop();
-							} else {
-								newArr.push(letter);
-							}
-						}
+					if (mirrorLetter === 'ё') {
+						mirrorLetter = 'е';
 					}
-					return newArr;
-				}, []);
-				
-				if (arrReduced.length === 0) {
-					return true;
-				}
-				return false;
+					if (letter !== mirrorLetter) {
+						sum = 0;
+					}
 
+					return sum;
+				}, 1);
+
+				return result;
 			}
 
-			let input = (prompt('Введите строку')).toLocaleLowerCase().split('');
+			let input = prompt('Введите строку');
+			
 			console.log( (CheckIsPalindrom(input)) ? 'Это палиндром' : 'Это не палиндром');
 
 		</script>
