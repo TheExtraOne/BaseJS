@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Palindroms</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<meta name="HandheldFriendly" content="True"/> <!--В некоторых случаях смартфоны автоматически изменяют масштаб страницы, лучше эту возможность отключать-->
+		<!-- saved from url=(0014)about:internet -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/> <!--Чтобы переключить Internet Explorer в режим последней версии --> 
+		<meta http-equiv="cleartype" content="on"/><!--Для включения сглаживания шрифтов -->
+		<!--<link rel="stylesheet" type="text/css" href="css/styles.css">--> <!--CSS для данной страницы-->
+	</head>
+	<body>
+
+		<script>
+
+			'use strict'
+
+			let CheckIsPalindrom = (str) => {
+				let rusAlphabet = 'ёйцукенгшщзхфывапролджэячсмитбюЁЙЦУКЕНГШЩЗХФЫВАПРОЛДЖЭЯЧСМИТБЮ'; //Можно переписать на set и использовать set.has(value) вместо includes			
+				let arrFiltered = str.split('').filter( (letter) => rusAlphabet.includes(letter) );
+
+				let result = arrFiltered.reduce( (sum, letter, letterIndex) => {
+					letter = letter.toLowerCase();
+					let mirrorLetter = arrFiltered[arrFiltered.length - 1 - letterIndex].toLowerCase();
+
+					if (letter === 'ё') {
+						letter = 'е';
+					}
+					if (mirrorLetter === 'ё') {
+						mirrorLetter = 'е';
+					}
+					if (letter !== mirrorLetter) {
+						sum = false;
+					}
+
+					return sum;
+				}, true);
+
+				return result;
+			}
+
+			let input = prompt('Введите строку');
+
+			console.log( (CheckIsPalindrom(input)) ? 'Это палиндром' : 'Это не палиндром');
+
+		</script>
+
+	</body>
+</html>
