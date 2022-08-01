@@ -31,17 +31,17 @@
 						mirrorLetter = 'е';
 					}
 					if (letter !== mirrorLetter) {
-						sum = 0;
+						sum = false;
 					}
 
 					return sum;
-				}, 1);
+				}, true);
 
 				return result;
 			}
 
 			let input = prompt('Введите строку');
-			
+
 			console.log( (CheckIsPalindrom(input)) ? 'Это палиндром' : 'Это не палиндром');
 
 		</script>
